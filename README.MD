@@ -1,0 +1,121 @@
+![AppIcon](../master/sample/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
+
+#FabOptions
+###A multi-functional FAB component, with customizable _options_
+
+[![Download](https://api.bintray.com/packages/joaquimleyapps/opensource/FabOptions/images/download.svg?version=1.0) ](https://bintray.com/joaquimleyapps/opensource/FabOptions/1.0/link)
+![minSdkVersion](https://img.shields.io/badge/minSdkVersion-21-yellow.svg?style=true)
+![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-25-green.svg?style=true)
+
+![Gif sample](../master/art/faboptions_demo.gif)
+
+###Read more on the blog post: < WIP-Soon >
+
+##How to use
+- Import gradle dependency:
+	
+		repositories {
+    		jcenter()
+		}
+
+		dependencies {
+	 	   	compile 'com.joaquimley:FabOptions:1.0'
+		}
+		
+
+- Define a `menu` file with your buttons information e.g.
+
+		<menu>
+		    <item
+		        android:id="@+id/faboptions_favorite"
+		        android:icon="@drawable/ic_favorite"
+		        android:title="Favorite" />
+		
+		    <item
+		        android:id="@+id/faboptions_textsms"
+		        android:icon="@drawable/ic_textsms"
+		        android:title="Message" />
+		
+		    <item
+		        android:id="@+id/faboptions_download"
+		        android:icon="@drawable/ic_file_download"
+		        android:title="Download" />
+		
+		
+		    <item
+		        android:id="@+id/faboptions_share"
+		        android:icon="@drawable/ic_share"
+		        android:title="Share" />
+		</menu>
+	
+
+
+- Add the component to your layout:
+
+
+		<com.joaquimley.faboptions.FabOptions
+			android:id="@+id/fab_options"
+	     	android:layout_width="wrap_content"
+	   		android:layout_height="wrap_content"
+	      	android:layout_gravity="bottom" />
+	       
+
+Via **XML**:
+
+- Bind the buttons menuby adding the  **custom attribute**: `app:button_menu="@menu/menu_your_menu"`
+
+**Programmatically**
+
+- Bind the buttons menu on your FabOptions instance with FabOptions#setMenu()
+
+        FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
+        fabOptions.setButtonsMenu(this, R.menu.menu_your_menu);
+       
+       
+
+**Listening for click events**
+
+- Set your fabOptions instance click listener, the defined Id's on the buttons `menu.xml`.
+
+### A special thanks to [André Mion](https://github.com/andremion) for the help on building this component
+
+
+
+###The sample is available
+
+[![Get it on Google Play](../master/art/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.joaquimley.faboptions.sample)
+
+## Contributing
+
+**Issues:**
+Fell free and it's encoraged to open a new issues follow the [ISSUE_TEMPLATE.MD](../development/ISSUE_TEMPLATE.MD)
+
+Contributions are always welcome!
+Follow the "fork-and-pull" Git workflow.
+
+ 1. **Fork** the repo on GitHub
+ 2. **Clone** the project to your own machine
+ 3. **Commit** changes to your own branch
+ 4. **Merge** with current *development* branch
+ 5. **Push** your work back up to your fork
+ 7. Submit a **Pull request** your changes can be reviewed (please refere the issue if reported)
+
+**Prevent** code-style related changes (at least run Ctrl+⌥+O, ⌥+⌘+L) before commiting.
+
+
+### License
+
+	Copyright © 2016 Joaquim Ley
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+	implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
