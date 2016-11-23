@@ -7,9 +7,13 @@
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-21-yellow.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-25-green.svg?style=true)
 
-![Gif sample](../master/art/faboptions_demo.gif)
-
 ###Read more on the blog post: < WIP-Soon >
+
+Original concept by **Praveen Bisht** posted on [MaterialUp](https://www.uplabs.com/posts/options-floating-interaction), design turned into code into open source library.
+
+![Gif sample](../master/art/faboptions_demo.gif)
+![Gif sample](../master/art/faboptions_materialup_demo.gif)
+
 
 ##How to use
 - Import gradle dependency:
