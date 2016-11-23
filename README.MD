@@ -11,8 +11,11 @@
 
 Original concept by **Praveen Bisht** posted on [MaterialUp](https://www.uplabs.com/posts/options-floating-interaction), design turned into code into open source library.
 
-![Gif sample](../master/art/faboptions_demo.gif)
-![Gif sample](../master/art/faboptions_materialup_demo.gif)
+![Gif concept sample](../master/art/faboptions_materialup_demo.gif)
+
+Android implementation
+
+![Gif android sample](../master/art/faboptions_demo.gif)
 
 
 ##How to use
