@@ -1,6 +1,6 @@
 ![AppIcon](../master/sample/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
 
-#FabOptions
+#FabOptions < WIP not production ready, please use with caution >
 ###A multi-functional FAB component, with customizable _options_
 
 [![Download](https://api.bintray.com/packages/joaquimleyapps/opensource/FabOptions/images/download.svg?version=1.0) ](https://bintray.com/joaquimleyapps/opensource/FabOptions/1.0/link)
