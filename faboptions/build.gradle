@@ -15,13 +15,8 @@
  */
 
 apply plugin: 'com.android.library'
-
-
-ext {
-    PUBLISH_GROUP_ID = 'com.joaquimley'
-    PUBLISH_ARTIFACT_ID = 'FabOptions'
-    PUBLISH_VERSION = '1.0'
-}
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 25
@@ -30,8 +25,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 3
-        versionName "1.0"
+        versionCode 4
+        versionName "1.0.1"
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -45,6 +40,8 @@ android {
 
 dependencies {
     final DESIGN_LIBRARY_VERSION = '25.0.1'
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:design:$DESIGN_LIBRARY_VERSION"
 }
-apply from: 'https://raw.githubusercontent.com/JoaquimLey/jcenter-configs/master/android-release-aar.gradle'
+apply from: 'deploy.gradle'
