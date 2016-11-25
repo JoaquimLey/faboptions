@@ -21,10 +21,10 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 /**
- * FabOptions component {@link CoordinatorLayout.Behavior} to react to {@link Snackbar}
+ * FabOptions component default CoordinatorLayout.Behavior to react Snackbar
  */
 
-class FabOptionsBehavior extends CoordinatorLayout.Behavior {
+public class FabOptionsBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
@@ -35,7 +35,8 @@ class FabOptionsBehavior extends CoordinatorLayout.Behavior {
     public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
         float translationY = Math.min(0, dependency.getTranslationY() - dependency.getHeight());
         child.setTranslationY(translationY);
-        // TODO: 21/11/2016 handle the instanceof Bottomsheetnav
+        // TODO: 21/11/2016 Handle instanceof Bottomsheetnav & others
         return true;
     }
+    //FabOptions component default {@link CoordinatorLayout.Behavior} to react to {@link Snackbar}
 }
