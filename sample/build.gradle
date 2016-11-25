@@ -38,11 +38,8 @@ android {
 
 dependencies {
     final DESIGN_LIBRARY_VERSION = '25.0.1'
-    final FABOPTIONS_VERSION = '0.0.5'
+    final FABOPTIONS_VERSION = '0.0.1'
 
     compile "com.android.support:design:$DESIGN_LIBRARY_VERSION"
-//    compile "com.github.joaquimley:faboptions:$FABOPTIONS_VERSION"
-    compile 'com.github.joaquimley:faboptions:0.0.5'
-//    compile 'com.github.joaquimley:faboptions:0.0.5'
-//    compile project(':faboptions')
+    compile "com.github.joaquimley:faboptions:$FABOPTIONS_VERSION"
 }

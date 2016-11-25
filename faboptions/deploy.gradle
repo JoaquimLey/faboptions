@@ -15,7 +15,7 @@
  */
 
 Properties properties = new Properties()
-properties.load(file('deploy.properties').newDataInputStream())
+properties.load(project.rootProject.file('deploy.properties').newDataInputStream())
 
 group = properties.getProperty('group')
 version = properties.getProperty('version')
@@ -64,7 +64,6 @@ install {
                         url properties.getProperty('pomLicenseUrl')
                     }
                 }
-
                 developers {
                     developer {
                         id properties.getProperty('pomDeveloperId')

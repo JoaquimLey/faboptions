@@ -36,7 +36,7 @@ import static com.joaquimley.faboptions.sample.R.id.toolbar;
 /**
  * Faboptions sample via Java {@see FabOptions#setButtonMenu()}
  */
-w
+
 public class JavaSampleActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;

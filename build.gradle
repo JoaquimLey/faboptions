@@ -23,11 +23,9 @@ buildscript {
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
     }
 }
-
 plugins {
     id "com.jfrog.bintray" version "1.7"
 }
-
 allprojects {
     repositories {
         jcenter()

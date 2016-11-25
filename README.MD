@@ -1,15 +1,18 @@
 ![AppIcon](../master/sample/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
 
-#FabOptions < WIP not production ready, please use with caution >
-###A multi-functional FAB component, with customizable _options_
+#FabOptions < WIP not production ready >
+###A multi-functional FAB component with customizable options.
 
-[![Download](https://api.bintray.com/packages/joaquimleyapps/opensource/FabOptions/images/download.svg?version=1.0) ](https://bintray.com/joaquimleyapps/opensource/FabOptions/1.0/link)
+[![Download](https://api.bintray.com/packages/joaquimleyapps/opensource/com.github.joaquimley%3Afaboptions/images/download.svg)](https://bintray.com/joaquimleyapps/opensource/com.github.joaquimley%3Afaboptions/_latestVersion)
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-21-yellow.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-25-green.svg?style=true)
 
+ A special thanks to **[André Mion](https://github.com/andremion)** for the help provided on building this component.
+
 ###Read more on the blog post: < WIP-Soon >
 
-Original concept by **Praveen Bisht** posted on [MaterialUp](https://www.uplabs.com/posts/options-floating-interaction), design turned into code into open source library.
+Original concept by **Praveen Bisht** posted on [MaterialUp](https://www.uplabs.com/posts/options-floating-interaction), turned into code into open source library.
+
 
 ![Gif concept sample](../master/art/faboptions_materialup_demo.gif)
 
@@ -20,17 +23,13 @@ Android implementation
 
 ##How to use
 - Import gradle dependency:
-	
-		repositories {
-    		jcenter()
-		}
 
 		dependencies {
-	 	   	compile 'com.joaquimley:FabOptions:1.0'
+	 	   	compile 'com.github.joaquimley:faboptions:0.0.1'
 		}
 		
 
-- Define a `menu` file with your buttons information e.g.
+- Define a `menu` file with your buttons information **e.g.**
 
 		<menu>
 		    <item
@@ -69,7 +68,7 @@ Android implementation
 
 Via **XML**:
 
-- Bind the buttons menuby adding the  **custom attribute**: `app:button_menu="@menu/menu_your_menu"`
+- Bind the buttons menu by adding the  **custom attribute** `app:button_menu="@menu/menu_your_menu"` to your component XML
 
 **Programmatically**
 
@@ -82,13 +81,10 @@ Via **XML**:
 
 **Listening for click events**
 
-- Set your fabOptions instance click listener, the defined Id's on the buttons `menu.xml`.
-
-### A special thanks to [André Mion](https://github.com/andremion) for the help on building this component
+- Set your FabOptions instance click listener, the defined Id's on the buttons `menu.xml`.
 
 
-
-###The sample is available
+###The sample is also available on the Playstore
 
 [![Get it on Google Play](../master/art/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.joaquimley.faboptions.sample)
 
