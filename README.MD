@@ -1,7 +1,6 @@
 ![AppIcon](../master/sample/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
 
 #FabOptions
-
 [![Download](https://api.bintray.com/packages/joaquimleyapps/opensource/com.github.joaquimley%3Afaboptions/images/download.svg)](https://bintray.com/joaquimleyapps/opensource/com.github.joaquimley%3Afaboptions/_latestVersion)
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-21-yellow.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-25-green.svg?style=true)
@@ -91,10 +90,11 @@ Via **XML**:
 
 ## Contributing
 
-**Issues:**
-Fell free and it's encoraged to open a new issues follow the [ISSUE_TEMPLATE.MD](../development/ISSUE_TEMPLATE.MD)
-
 Contributions are always welcome!
+
+**Issues:**
+Fell free to open a new issue. Follow the [ISSUE_TEMPLATE.MD](../development/ISSUE_TEMPLATE.MD)
+
 Follow the "fork-and-pull" Git workflow.
 
  1. **Fork** the repo on GitHub
