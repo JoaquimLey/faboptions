@@ -1,6 +1,7 @@
 ![AppIcon](../master/sample/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
 
 #FabOptions
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Nov 27, 2016-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/4734#)
 [![Download](https://api.bintray.com/packages/joaquimleyapps/opensource/com.github.joaquimley%3Afaboptions/images/download.svg)](https://bintray.com/joaquimleyapps/opensource/com.github.joaquimley%3Afaboptions/_latestVersion)
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-21-yellow.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-25-green.svg?style=true)
