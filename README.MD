@@ -1,15 +1,15 @@
 ![AppIcon](../master/sample/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
 
-#FabOptions < WIP not production ready >
-###A multi-functional FAB component with customizable options.
-
+#FabOptions
 [![Download](https://api.bintray.com/packages/joaquimleyapps/opensource/com.github.joaquimley%3Afaboptions/images/download.svg)](https://bintray.com/joaquimleyapps/opensource/com.github.joaquimley%3Afaboptions/_latestVersion)
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-21-yellow.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-25-green.svg?style=true)
 
- A special thanks to **[André Mion](https://github.com/andremion)** for the help provided on building this component.
-
+###A multi-functional FAB component with customizable options.
 ###Read more on the blog post: < WIP-Soon >
+
+**Special thanks to [André Mion](https://github.com/andremion)** for the help provided on building this component.
+
 
 Original concept by **Praveen Bisht** posted on [MaterialUp](https://www.uplabs.com/posts/options-floating-interaction), turned into code into open source library.
 
@@ -25,7 +25,7 @@ Android implementation
 - Import gradle dependency:
 
 		dependencies {
-	 	   	compile 'com.github.joaquimley:faboptions:0.0.1'
+	 	   	compile 'com.github.joaquimley:faboptions:1.0.0'
 		}
 		
 
@@ -90,10 +90,11 @@ Via **XML**:
 
 ## Contributing
 
-**Issues:**
-Fell free and it's encoraged to open a new issues follow the [ISSUE_TEMPLATE.MD](../development/ISSUE_TEMPLATE.MD)
-
 Contributions are always welcome!
+
+**Issues:**
+Fell free to open a new issue. Follow the [ISSUE_TEMPLATE.MD](../development/ISSUE_TEMPLATE.MD)
+
 Follow the "fork-and-pull" Git workflow.
 
  1. **Fork** the repo on GitHub
