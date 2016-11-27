@@ -15,15 +15,16 @@
   -->
 
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="@dimen/faboptions_vector_dimensions"
-        android:height="@dimen/faboptions_vector_dimensions"
-        android:viewportWidth="24.0"
-        android:viewportHeight="24.0">
+    android:width="@dimen/faboptions_vector_dimensions"
+    android:height="@dimen/faboptions_vector_dimensions"
+    android:viewportHeight="24.0"
+    android:viewportWidth="24.0">
 
     <path
         android:name="main"
+        android:pathData="@string/faboptions_vector_close_path"
         android:strokeColor="#FFFFFF"
-        android:strokeWidth="4.1"
         android:strokeLineCap="round"
-        android:pathData="@string/faboptions_vector_close_path"/>
+        android:strokeWidth="4.1" />
+
 </vector>
