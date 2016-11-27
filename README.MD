@@ -26,7 +26,7 @@ Android implementation
 - Import gradle dependency:
 
 		dependencies {
-	 	   	compile 'com.github.joaquimley:faboptions:1.0.0'
+	 	   	compile 'com.github.joaquimley:faboptions:1.0.1'
 		}
 		
 
