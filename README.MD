@@ -81,7 +81,9 @@ Via **XML**:
 
 **Listening for click events**
 
-- Set your FabOptions instance click listener, the defined Id's on the buttons `menu.xml`.
+- Set your FabOptions instance click listener.
+
+- Handle the click events for each button id defined on the `menu.xml`.
 
 
 ###The sample is also available on the Playstore
