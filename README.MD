@@ -31,53 +31,57 @@ Android implementation
 		}
 		
 
-- Define a `menu` file with your buttons information **e.g.**
+- Define a `menu.xml` file with your buttons information **e.g.**
 
-		<menu>
-		    <item
-		        android:id="@+id/faboptions_favorite"
-		        android:icon="@drawable/ic_favorite"
-		        android:title="Favorite" />
-		
-		    <item
-		        android:id="@+id/faboptions_textsms"
-		        android:icon="@drawable/ic_textsms"
-		        android:title="Message" />
-		
-		    <item
-		        android:id="@+id/faboptions_download"
-		        android:icon="@drawable/ic_file_download"
-		        android:title="Download" />
-		
-		
-		    <item
-		        android:id="@+id/faboptions_share"
-		        android:icon="@drawable/ic_share"
-		        android:title="Share" />
-		</menu>
+```xml
+<menu>
+    <item
+        android:id="@+id/faboptions_favorite"
+        android:icon="@drawable/ic_favorite"
+        android:title="Favorite" />
 	
+    <item
+        android:id="@+id/faboptions_textsms"
+        android:icon="@drawable/ic_textsms"
+        android:title="Message" />
+	
+    <item
+        android:id="@+id/faboptions_download"
+        android:icon="@drawable/ic_file_download"
+        android:title="Download" />
+	
+	
+    <item
+        android:id="@+id/faboptions_share"
+        android:icon="@drawable/ic_share"
+        android:title="Share" />
+</menu>
+```	
 
 
 - Add the component to your layout:
 
-
-		<com.joaquimley.faboptions.FabOptions
-			android:id="@+id/fab_options"
-	     	android:layout_width="wrap_content"
-	   		android:layout_height="wrap_content"
-	      	android:layout_gravity="bottom" />
+```xml
+<com.joaquimley.faboptions.FabOptions
+	android:id="@+id/fab_options"
+ 	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+  	android:layout_gravity="bottom" />
+```  	
 	       
 
 Via **XML**:
 
-- Bind the buttons menu by adding the  **custom attribute** `app:button_menu="@menu/menu_your_menu"` to your component XML
+- Bind the buttons menu by adding the  **custom attribute** `app:button_menu="@menu/your_fab_buttons"` to your component XML
 
 **Programmatically**
 
 - Bind the buttons menu on your FabOptions instance with FabOptions#setMenu()
 
-        FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
-        fabOptions.setButtonsMenu(this, R.menu.menu_your_menu);
+```java
+FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
+fabOptions.setButtonsMenu(this, R.menu.your_fab_buttons);
+```
        
        
 
