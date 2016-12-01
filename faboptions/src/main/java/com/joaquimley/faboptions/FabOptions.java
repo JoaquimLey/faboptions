@@ -18,23 +18,25 @@ package com.joaquimley.faboptions;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.drawable.AnimatedVectorDrawable;
 import android.support.annotation.MenuRes;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.AppCompatImageView;
-import android.transition.ChangeBounds;
-import android.transition.ChangeTransform;
-import android.transition.TransitionManager;
-import android.transition.TransitionSet;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import com.transitionseverywhere.ChangeBounds;
+import com.transitionseverywhere.ChangeTransform;
+import com.transitionseverywhere.TransitionManager;
+import com.transitionseverywhere.TransitionSet;
 
 /**
  * FabOptions component
@@ -138,9 +140,11 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
     }
 
     private void open() {
-        AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_menu_animatable, null);
+        AnimatedVectorDrawableCompat drawable = (AnimatedVectorDrawableCompat) AppCompatResources.getDrawable(getContext(), R.drawable.faboptions_ic_menu_animatable);
         mFab.setImageDrawable(drawable);
-        drawable.start();
+        if (drawable != null) {
+            drawable.start();
+        }
         TransitionManager.beginDelayedTransition(this, new OpenMorphTransition(mButtonContainer));
         animateButtons(true);
         animateBackground(true);
@@ -148,9 +152,11 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
     }
 
     private void close() {
-        AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_close_animatable, null);
+        AnimatedVectorDrawableCompat drawable = (AnimatedVectorDrawableCompat) AppCompatResources.getDrawable(getContext(), R.drawable.faboptions_ic_close_animatable);
         mFab.setImageDrawable(drawable);
-        drawable.start();
+        if (drawable != null) {
+            drawable.start();
+        }
         TransitionManager.beginDelayedTransition(this, new CloseMorphTransition(mButtonContainer));
         animateButtons(false);
         animateBackground(false);
