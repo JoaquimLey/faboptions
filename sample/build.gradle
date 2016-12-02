@@ -22,7 +22,7 @@ android {
 
     defaultConfig {
         applicationId "com.joaquimley.faboptions.sample"
-        minSdkVersion 21
+        minSdkVersion 14
         targetSdkVersion 25
         versionCode 4
         versionName "1.0.0"
