@@ -19,6 +19,7 @@ package com.joaquimley.faboptions;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.support.annotation.IntDef;
 import android.support.annotation.MenuRes;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -36,6 +37,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
  * FabOptions component
  */
@@ -46,7 +50,19 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
     private static final int NO_DIMENSION = 0;
     private static final long CLOSE_MORPH_TRANSFORM_DURATION = 70;
 
+    public static final int DIRECTION_SPLIT = 0;
+    public static final int DIRECTION_UP = 1;
+    public static final int DIRECTION_DOWN = 2;
+    public static final int DIRECTION_LEFT = 3;
+    public static final int DIRECTION_RIGHT = 4;
+
+    @IntDef({DIRECTION_SPLIT, DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Direction {
+    }
+
     private boolean mIsOpen;
+    private int mDirection;
     private View.OnClickListener mListener;
 
     private Menu mMenu; // TODO: 22/11/2016 add items in runtime
@@ -86,13 +102,16 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         if (attributes.hasValue(R.styleable.FabOptions_button_menu)) {
             setButtonsMenu(context, attributes.getResourceId(R.styleable.FabOptions_button_menu, 0));
         }
+
+        if (attributes.hasValue(R.styleable.FabOptions_direction)) {
+            mDirection = attributes.getInt(R.styleable.FabOptions_direction, DIRECTION_SPLIT);
+        }
     }
 
     public void setButtonsMenu(Context context, @MenuRes int menuId) {
         mMenu = new MenuBuilder(context);
         SupportMenuInflater menuInf = new SupportMenuInflater(context);
         menuInf.inflate(menuId, mMenu);
-
         addButtonsFromMenu(context, mMenu);
         mSeparator = mButtonContainer.addSeparator(context);
         close();
