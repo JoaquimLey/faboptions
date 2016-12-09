@@ -17,6 +17,12 @@
 <resources>
     <declare-styleable name="FabOptions">
         <attr name="button_menu" format="reference" type="menu" />
-        <attr name="direction" format="integer" />
+        <attr name="direction" format="integer">
+            <flag name="split" value="0"/>
+            <flag name="up" value="1"/>
+            <flag name="down" value="2"/>
+            <flag name="left" value="3"/>
+            <flag name="right" value="4"/>
+        </attr>
     </declare-styleable>
 </resources>

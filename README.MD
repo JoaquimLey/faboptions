@@ -30,7 +30,17 @@ Android implementation
 	 	   	compile 'com.github.joaquimley:faboptions:1.0.1'
 		}
 		
+- Add the component to your layout:
 
+```xml
+<com.joaquimley.faboptions.FabOptions
+	android:id="@+id/fab_options"
+ 	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+  	android:layout_gravity="bottom" />
+``` 
+
+###Buttons
 - Define a `menu.xml` file with your buttons information **e.g.**
 
 ```xml
@@ -56,25 +66,14 @@ Android implementation
         android:icon="@drawable/ic_share"
         android:title="Share" />
 </menu>
-```	
+```	 	
+Bind the buttons to your component
 
-
-- Add the component to your layout:
-
-```xml
-<com.joaquimley.faboptions.FabOptions
-	android:id="@+id/fab_options"
- 	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-  	android:layout_gravity="bottom" />
-```  	
-	       
-
-Via **XML**:
+**XML:**
 
 - Bind the buttons menu by adding the  **custom attribute** `app:button_menu="@menu/your_fab_buttons"` to your component XML
 
-**Programmatically**
+**Programmatically:**
 
 - Bind the buttons menu on your FabOptions instance with FabOptions#setMenu()
 
@@ -92,7 +91,7 @@ fabOptions.setButtonsMenu(this, R.menu.your_fab_buttons);
 - Handle the click events for each button id defined on the `menu.xml`.
 
 
-###The sample is also available on the Playstore
+###Sample available on the Playstore
 
 [![Get it on Google Play](../master/art/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.joaquimley.faboptions.sample)
 

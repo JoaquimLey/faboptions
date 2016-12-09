@@ -22,8 +22,11 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * Custom FabOptions buttons ({@link ImageView}) container, enables runtime view insertion
@@ -48,8 +51,8 @@ public class FabOptionsButtonContainer extends LinearLayout {
     }
 
     public AppCompatImageView addButton(Context context, int buttonId, CharSequence title, Drawable drawableIcon, Integer index) {
-        AppCompatImageView fabOptionButton =
-                (AppCompatImageView) LayoutInflater.from(context).inflate(R.layout.faboptions_button, this, false);
+        AppCompatImageView fabOptionButton = (AppCompatImageView) LayoutInflater.from(context)
+                .inflate(R.layout.faboptions_button, this, false);
 
         fabOptionButton.setImageDrawable(drawableIcon);
         fabOptionButton.setContentDescription(title);
@@ -63,9 +66,36 @@ public class FabOptionsButtonContainer extends LinearLayout {
         return fabOptionButton;
     }
 
-    public View addSeparator(Context context) {
+    public View addSeparator(Context context, int direction) {
         View separator = LayoutInflater.from(context).inflate(R.layout.faboptions_separator, this, false);
-        addView(separator, (getChildCount() / 2));
+
+        switch (direction) {
+            case FabOptions.DIRECTION_UP:
+                setOrientation(VERTICAL);
+                setLayoutParams(new FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
+                addView(separator, (getChildCount()));
+                break;
+
+            case FabOptions.DIRECTION_DOWN:
+                setOrientation(VERTICAL);
+                setLayoutParams(new FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
+                addView(separator, 0);
+                break;
+
+            case FabOptions.DIRECTION_LEFT:
+                setOrientation(HORIZONTAL);
+                addView(separator, getChildCount());
+                break;
+
+            case FabOptions.DIRECTION_RIGHT:
+                setOrientation(HORIZONTAL);
+                addView(separator, 0);
+                break;
+
+            default: // FabOptions.DIRECTION_SPLIT:
+                setOrientation(HORIZONTAL);
+                addView(separator, (getChildCount() / 2));
+        }
         return separator;
     }
 }

@@ -31,6 +31,7 @@ import android.transition.ChangeTransform;
 import android.transition.TransitionManager;
 import android.transition.TransitionSet;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,10 +63,9 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
     }
 
     private boolean mIsOpen;
-    private int mDirection;
     private View.OnClickListener mListener;
-
     private Menu mMenu; // TODO: 22/11/2016 add items in runtime
+    private int mDirection; // TODO: 09/12/2016 Change direction in runtime
     private FloatingActionButton mFab;
 
     private View mBackground;
@@ -91,22 +91,23 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 
     private void initViews(Context context) {
         inflate(context, R.layout.faboptions_layout, this);
-        mIsOpen = false;
         mBackground = findViewById(R.id.background);
+        mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.button_container);
         mFab = (FloatingActionButton) findViewById(R.id.faboptions_fab);
         mFab.setOnClickListener(this);
-        mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.button_container);
     }
 
     private void inflateButtonsFromAttrs(Context context, AttributeSet attrs) {
         TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.FabOptions, 0, 0);
+        if (attributes.hasValue(R.styleable.FabOptions_direction)) {
+            mDirection = attributes.getInt(R.styleable.FabOptions_direction, DIRECTION_SPLIT);
+        }
+
         if (attributes.hasValue(R.styleable.FabOptions_button_menu)) {
             setButtonsMenu(context, attributes.getResourceId(R.styleable.FabOptions_button_menu, 0));
         }
 
-        if (attributes.hasValue(R.styleable.FabOptions_direction)) {
-            mDirection = attributes.getInt(R.styleable.FabOptions_direction, DIRECTION_SPLIT);
-        }
+        Log.e(TAG, "Direction from attributes " + mDirection);
     }
 
     public void setButtonsMenu(Context context, @MenuRes int menuId) {
@@ -114,7 +115,11 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         SupportMenuInflater menuInf = new SupportMenuInflater(context);
         menuInf.inflate(menuId, mMenu);
         addButtonsFromMenu(context, mMenu);
-        mSeparator = mButtonContainer.addSeparator(context);
+        mSeparator = mButtonContainer.addSeparator(context, mDirection);
+    }
+
+    public void setDirection(@Direction int direction) {
+        mDirection = direction;
     }
 
     private void addButtonsFromMenu(Context context, Menu menu) {
@@ -149,12 +154,6 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 
     public void setOnClickListener(View.OnClickListener listener) {
         mListener = listener;
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-
     }
 
     private void open() {
