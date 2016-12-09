@@ -70,6 +70,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         if (attrs != null) {
             inflateButtonsFromAttrs(context, attrs);
         }
+        close();
     }
 
     private void initViews(Context context) {
@@ -92,10 +93,8 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         mMenu = new MenuBuilder(context);
         SupportMenuInflater menuInf = new SupportMenuInflater(context);
         menuInf.inflate(menuId, mMenu);
-
         addButtonsFromMenu(context, mMenu);
         mSeparator = mButtonContainer.addSeparator(context);
-        close();
     }
 
     private void addButtonsFromMenu(Context context, Menu menu) {
@@ -135,19 +134,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        if (mSeparator != null) {
-            ViewGroup.LayoutParams separatorLayoutParams = mSeparator.getLayoutParams();
-            separatorLayoutParams.width = mFab.getMeasuredWidth();
-            separatorLayoutParams.height = mFab.getMeasuredHeight();
-            mSeparator.setLayoutParams(separatorLayoutParams);
-        }
 
-        if (mIsOpen) {
-            ViewGroup.LayoutParams backgroundLayoutParams = mBackground.getLayoutParams();
-            backgroundLayoutParams.width = mButtonContainer.getMeasuredWidth();
-            backgroundLayoutParams.height = mButtonContainer.getMeasuredHeight();
-            mBackground.setLayoutParams(backgroundLayoutParams);
-        }
     }
 
     private void open() {
@@ -170,6 +157,17 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         mIsOpen = false;
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (mSeparator != null) {
+            ViewGroup.LayoutParams separatorLayoutParams = mSeparator.getLayoutParams();
+            separatorLayoutParams.width = mFab.getMeasuredWidth();
+            separatorLayoutParams.height = mFab.getMeasuredHeight();
+            mSeparator.setLayoutParams(separatorLayoutParams);
+        }
+    }
+
     private void animateBackground(final boolean isOpen) {
         ViewGroup.LayoutParams backgroundLayoutParams = mBackground.getLayoutParams();
         backgroundLayoutParams.width = isOpen ? mButtonContainer.getMeasuredWidth() : NO_DIMENSION;
@@ -189,7 +187,6 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 
     private static class OpenMorphTransition extends TransitionSet {
         OpenMorphTransition(ViewGroup viewGroup) {
-
             ChangeBounds changeBound = new ChangeBounds();
             changeBound.excludeChildren(R.id.button_container, true);
 

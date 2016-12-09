@@ -45,5 +45,4 @@ public class FabOptionsBehavior extends CoordinatorLayout.Behavior<FrameLayout> 
         super.onDependentViewRemoved(parent, child, dependency);
         child.setTranslationY(0);
     }
-    //FabOptions component default {@link CoordinatorLayout.Behavior} to react to {@link Snackbar}
 }
