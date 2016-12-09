@@ -42,5 +42,4 @@ dependencies {
 
     compile "com.android.support:design:$DESIGN_LIBRARY_VERSION"
     compile "com.github.joaquimley:faboptions:$FABOPTIONS_VERSION"
-//    compile project(':faboptions')
 }
