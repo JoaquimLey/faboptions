@@ -16,7 +16,6 @@
   -->
 
 <set xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:ordering="sequentially">
 
     <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,7 +24,6 @@
         android:valueFrom="@string/faboptions_vector_close_path"
         android:valueTo="@string/faboptions_vector_overflow_path"
         android:valueType="pathType"
-        app:vc_valueType="pathType"
         />
 
 </set>
