@@ -49,8 +49,6 @@ import android.widget.FrameLayout;
 public class FabOptions extends FrameLayout implements View.OnClickListener {
 
     private static final String TAG = "FabOptions";
-    private static final int NO_DIMENSION = 0;
-    private static final long CLOSE_MORPH_TRANSFORM_DURATION = 70;
 
     private boolean mIsOpen;
     private View.OnClickListener mListener;
@@ -260,7 +258,6 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
             }
         }
     }
-
 
     public void performScaleAnimation(View view, float startScaleX, float endScaleX, float startScaleY, float endScaleY) {
         performScaleAnimation(view, startScaleX, endScaleX, startScaleY, endScaleY, null);
