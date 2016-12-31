@@ -18,11 +18,11 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
         applicationId "com.joaquimley.faboptions.sample"
-        minSdkVersion 21
+        minSdkVersion 14
         targetSdkVersion 25
         versionCode 4
         versionName "1.0.0"
@@ -41,5 +41,6 @@ dependencies {
     final FABOPTIONS_VERSION = '1.0.2'
 
     compile "com.android.support:design:$DESIGN_LIBRARY_VERSION"
-    compile "com.github.joaquimley:faboptions:$FABOPTIONS_VERSION"
+    //    compile "com.github.joaquimley:faboptions:$FABOPTIONS_VERSION"
+    compile project(':faboptions')
 }

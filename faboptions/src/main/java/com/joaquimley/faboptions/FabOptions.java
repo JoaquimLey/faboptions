@@ -16,24 +16,30 @@
 
 package com.joaquimley.faboptions;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
 import android.support.annotation.MenuRes;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.AppCompatImageView;
-import android.transition.ChangeBounds;
-import android.transition.ChangeTransform;
-import android.transition.TransitionManager;
-import android.transition.TransitionSet;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 
 /**
@@ -43,8 +49,6 @@ import android.widget.FrameLayout;
 public class FabOptions extends FrameLayout implements View.OnClickListener {
 
     private static final String TAG = "FabOptions";
-    private static final int NO_DIMENSION = 0;
-    private static final long CLOSE_MORPH_TRANSFORM_DURATION = 70;
 
     private boolean mIsOpen;
     private View.OnClickListener mListener;
@@ -55,6 +59,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
     private View mBackground;
     private View mSeparator;
     private FabOptionsButtonContainer mButtonContainer;
+    private int mAnimationDuration;
 
     public FabOptions(Context context) {
         this(context, null, 0);
@@ -80,6 +85,8 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         mFab = (FloatingActionButton) findViewById(R.id.faboptions_fab);
         mFab.setOnClickListener(this);
         mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.button_container);
+        setDrawableColor(mBackground.getBackground());
+        mAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
 
     private void inflateButtonsFromAttrs(Context context, AttributeSet attrs) {
@@ -110,6 +117,22 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         button.setOnClickListener(this);
     }
 
+    private int fetchAccentColor() {
+        TypedValue typedValue = new TypedValue();
+
+        TypedArray a = getContext().obtainStyledAttributes(typedValue.data, new int[] { R.attr.colorAccent });
+        int color = a.getColor(0, 0);
+
+        a.recycle();
+
+        return color;
+    }
+
+    public void setDrawableColor(Drawable d) {
+        d = DrawableCompat.wrap(d);
+        DrawableCompat.setTint(d.mutate(), fetchAccentColor());
+    }
+
     @Override
     public void onClick(View v) {
         int viewId = v.getId();
@@ -134,27 +157,56 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-
     }
 
     private void open() {
-        AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_menu_animatable, null);
-        mFab.setImageDrawable(drawable);
-        drawable.start();
-        TransitionManager.beginDelayedTransition(this, new OpenMorphTransition(mButtonContainer));
-        animateButtons(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_menu_animatable, null);
+            mFab.setImageDrawable(drawable);
+            drawable.start();
+        } else {
+            animateFabDrawable(true);
+        }
         animateBackground(true);
         mIsOpen = true;
     }
 
     private void close() {
-        AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_close_animatable, null);
-        mFab.setImageDrawable(drawable);
-        drawable.start();
-        TransitionManager.beginDelayedTransition(this, new CloseMorphTransition(mButtonContainer));
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_close_animatable, null);
+            mFab.setImageDrawable(drawable);
+            drawable.start();
+        } else {
+            animateFabDrawable(false);
+        }
         animateButtons(false);
         animateBackground(false);
         mIsOpen = false;
+    }
+  
+    private void animateFabDrawable(boolean isOpen){
+        final Drawable drawables[];
+        if (isOpen){
+            drawables = new Drawable[]{VectorDrawableCompat.create(getResources(), R.drawable.faboptions_ic_close, null),
+                    VectorDrawableCompat.create(getResources(), R.drawable.faboptions_ic_overflow, null)};
+        }else {
+            drawables = new Drawable[]{VectorDrawableCompat.create(getResources(), R.drawable.faboptions_ic_overflow, null),
+                    VectorDrawableCompat.create(getResources(), R.drawable.faboptions_ic_close, null)};
+        }
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 255);
+        valueAnimator.setInterpolator(new LinearInterpolator());
+        valueAnimator.setDuration(mAnimationDuration);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+                drawables[0].setAlpha(value);
+                drawables[1].setAlpha(255 - value);
+                LayerDrawable layerDrawable = new LayerDrawable(drawables);
+                mFab.setImageDrawable(layerDrawable);
+            }
+        });
+        valueAnimator.start();
     }
 
     @Override
@@ -166,53 +218,67 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
             separatorLayoutParams.height = mFab.getMeasuredHeight();
             mSeparator.setLayoutParams(separatorLayoutParams);
         }
+        if (!mIsOpen) {
+            ViewGroup.LayoutParams backgroundLayoutParams = mBackground.getLayoutParams();
+            backgroundLayoutParams.width = mButtonContainer.getMeasuredWidth();
+            backgroundLayoutParams.height = mButtonContainer.getMeasuredHeight();
+            mBackground.setLayoutParams(backgroundLayoutParams);
+        }
     }
 
     private void animateBackground(final boolean isOpen) {
-        ViewGroup.LayoutParams backgroundLayoutParams = mBackground.getLayoutParams();
-        backgroundLayoutParams.width = isOpen ? mButtonContainer.getMeasuredWidth() : NO_DIMENSION;
-        mBackground.setLayoutParams(backgroundLayoutParams);
+        if (isOpen) {
+            performScaleAnimation(mBackground, 0f, 1f, 1f, 1f, new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    animateButtons(true);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+        } else {
+            performScaleAnimation(mBackground, 1f, 0f, 1f, 1f);
+        }
     }
+
 
     private void animateButtons(boolean isOpen) {
         for (int i = 0; i < mButtonContainer.getChildCount(); i++) {
-            mButtonContainer.getChildAt(i).setScaleX(isOpen ? 1 : 0);
-            mButtonContainer.getChildAt(i).setScaleY(isOpen ? 1 : 0);
+            if (isOpen) {
+                performScaleAnimation(mButtonContainer.getChildAt(i), 0f, 1f, 0f, 1f);
+            } else {
+                performScaleAnimation(mButtonContainer.getChildAt(i), 1f, 0f, 1f, 0f);
+            }
         }
+    }
+
+    public void performScaleAnimation(View view, float startScaleX, float endScaleX, float startScaleY, float endScaleY) {
+        performScaleAnimation(view, startScaleX, endScaleX, startScaleY, endScaleY, null);
+    }
+
+    public void performScaleAnimation(View view, float startScaleX, float endScaleX, float startScaleY, float endScaleY, Animation.AnimationListener animationListener) {
+        Animation anim = new ScaleAnimation(
+                startScaleX, endScaleX, // Start and end values for the X axis scaling
+                startScaleY, endScaleY, // Start and end values for the Y axis scaling
+                Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
+                Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
+        anim.setFillAfter(true); // Needed to keep the result of the animation
+        anim.setDuration(mAnimationDuration);
+        if (animationListener != null) {
+            anim.setAnimationListener(animationListener);
+        }
+        view.startAnimation(anim);
     }
 
     public boolean isOpen() {
         return mIsOpen;
-    }
-
-    private static class OpenMorphTransition extends TransitionSet {
-        OpenMorphTransition(ViewGroup viewGroup) {
-            ChangeBounds changeBound = new ChangeBounds();
-            changeBound.excludeChildren(R.id.button_container, true);
-
-            ChangeTransform changeTransform = new ChangeTransform();
-            for (int i = 0; i < viewGroup.getChildCount(); i++) {
-                changeTransform.addTarget(viewGroup.getChildAt(i));
-            }
-            addTransition(changeBound);
-            addTransition(changeTransform);
-            setOrdering(TransitionSet.ORDERING_SEQUENTIAL);
-        }
-    }
-
-    private static class CloseMorphTransition extends TransitionSet {
-        CloseMorphTransition(ViewGroup viewGroup) {
-            ChangeBounds changeBound = new ChangeBounds();
-            changeBound.excludeChildren(R.id.button_container, true);
-
-            ChangeTransform changeTransform = new ChangeTransform();
-            for (int i = 0; i < viewGroup.getChildCount(); i++) {
-                changeTransform.addTarget(viewGroup.getChildAt(i));
-            }
-            changeTransform.setDuration(CLOSE_MORPH_TRANSFORM_DURATION);
-            addTransition(changeTransform);
-            addTransition(changeBound);
-            setOrdering(TransitionSet.ORDERING_TOGETHER);
-        }
     }
 }

@@ -25,6 +25,7 @@
         android:pathData="@string/faboptions_vector_close_path"
         android:strokeColor="#FFFFFF"
         android:strokeLineCap="round"
-        android:strokeWidth="4.1" />
+        android:strokeWidth="4.1"
+        />
 
 </vector>

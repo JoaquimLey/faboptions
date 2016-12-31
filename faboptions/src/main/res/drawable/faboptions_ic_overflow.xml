@@ -22,10 +22,10 @@
 
     <path
         android:name="main"
-        android:fillColor="#FFF"
         android:pathData="@string/faboptions_vector_overflow_path"
-        android:strokeColor="#FFF"
+        android:strokeColor="#FFFFFF"
         android:strokeLineCap="round"
-        android:strokeWidth="4.1" />
+        android:strokeWidth="4.1"
+        />
 
 </vector>

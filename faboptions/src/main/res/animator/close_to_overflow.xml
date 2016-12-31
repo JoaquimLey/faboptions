@@ -23,6 +23,7 @@
         android:propertyName="pathData"
         android:valueFrom="@string/faboptions_vector_close_path"
         android:valueTo="@string/faboptions_vector_overflow_path"
-        android:valueType="pathType" />
+        android:valueType="pathType"
+        />
 
 </set>
