@@ -183,7 +183,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         animateBackground(false);
         mIsOpen = false;
     }
-
+  
     private void animateFabDrawable(boolean isOpen){
         final Drawable drawables[];
         if (isOpen){
@@ -248,6 +248,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
             performScaleAnimation(mBackground, 1f, 0f, 1f, 1f);
         }
     }
+
 
     private void animateButtons(boolean isOpen) {
         for (int i = 0; i < mButtonContainer.getChildCount(); i++) {
