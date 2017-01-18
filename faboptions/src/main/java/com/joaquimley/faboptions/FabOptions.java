@@ -96,6 +96,14 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         }
     }
 
+    /**
+     * Deprecated. Use {@link #setButtonsMenu(int)} instead.
+     */
+    @Deprecated
+    public void setButtonsMenu(Context context, @MenuRes int menuId) {
+        setButtonsMenu(menuId);
+    }
+
     public void setButtonsMenu(@MenuRes int menuId) {
         Context context = getContext();
         mMenu = new MenuBuilder(context);
