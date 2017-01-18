@@ -92,11 +92,12 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
     private void inflateButtonsFromAttrs(Context context, AttributeSet attrs) {
         TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.FabOptions, 0, 0);
         if (attributes.hasValue(R.styleable.FabOptions_button_menu)) {
-            setButtonsMenu(context, attributes.getResourceId(R.styleable.FabOptions_button_menu, 0));
+            setButtonsMenu(attributes.getResourceId(R.styleable.FabOptions_button_menu, 0));
         }
     }
 
-    public void setButtonsMenu(Context context, @MenuRes int menuId) {
+    public void setButtonsMenu(@MenuRes int menuId) {
+        Context context = getContext();
         mMenu = new MenuBuilder(context);
         SupportMenuInflater menuInf = new SupportMenuInflater(context);
         menuInf.inflate(menuId, mMenu);
