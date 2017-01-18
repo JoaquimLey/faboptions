@@ -78,7 +78,7 @@ Android implementation
 
 ```java
 FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
-fabOptions.setButtonsMenu(this, R.menu.your_fab_buttons);
+fabOptions.setButtonsMenu(R.menu.your_fab_buttons);
 ```
        
        
