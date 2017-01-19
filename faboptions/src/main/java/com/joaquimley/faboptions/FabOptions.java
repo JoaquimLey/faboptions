@@ -19,9 +19,14 @@ package com.joaquimley.faboptions;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.VectorDrawable;
+import android.os.Build;
 import android.support.annotation.MenuRes;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.AppCompatImageView;
@@ -75,10 +80,13 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
     private void initViews(Context context) {
         inflate(context, R.layout.faboptions_layout, this);
         mIsOpen = false;
+
         mBackground = findViewById(R.id.background);
+        mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.button_container);
+
         mFab = (FloatingActionButton) findViewById(R.id.faboptions_fab);
         mFab.setOnClickListener(this);
-        mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.button_container);
+        setInitialFabIcon();
     }
 
     private void inflateButtonsFromAttrs(Context context, AttributeSet attrs) {
@@ -88,14 +96,22 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         }
     }
 
+    public void setButtonsMenu(@MenuRes int menuId) {
+        Context context = getContext();
+        setButtonsMenu(context, menuId);
+    }
+
+    /**
+     * Deprecated. Use {@link #setButtonsMenu(int)} instead.
+     */
+    @Deprecated
     public void setButtonsMenu(Context context, @MenuRes int menuId) {
         mMenu = new MenuBuilder(context);
         SupportMenuInflater menuInf = new SupportMenuInflater(context);
         menuInf.inflate(menuId, mMenu);
-
         addButtonsFromMenu(context, mMenu);
         mSeparator = mButtonContainer.addSeparator(context);
-        close();
+        animateButtons(false);
     }
 
     private void addButtonsFromMenu(Context context, Menu menu) {
@@ -132,42 +148,67 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         mListener = listener;
     }
 
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-        if (mSeparator != null) {
-            ViewGroup.LayoutParams separatorLayoutParams = mSeparator.getLayoutParams();
-            separatorLayoutParams.width = mFab.getMeasuredWidth();
-            separatorLayoutParams.height = mFab.getMeasuredHeight();
-            mSeparator.setLayoutParams(separatorLayoutParams);
-        }
-
-        if (mIsOpen) {
-            ViewGroup.LayoutParams backgroundLayoutParams = mBackground.getLayoutParams();
-            backgroundLayoutParams.width = mButtonContainer.getMeasuredWidth();
-            backgroundLayoutParams.height = mButtonContainer.getMeasuredHeight();
-            mBackground.setLayoutParams(backgroundLayoutParams);
-        }
-    }
-
     private void open() {
-        AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_menu_animatable, null);
-        mFab.setImageDrawable(drawable);
-        drawable.start();
-        TransitionManager.beginDelayedTransition(this, new OpenMorphTransition(mButtonContainer));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_menu_animatable, null);
+            mFab.setImageDrawable(drawable);
+            drawable.start();
+        } else {
+            final AnimatedVectorDrawableCompat drawableCompat = AnimatedVectorDrawableCompat.create(getContext(), R.drawable.faboptions_ic_menu_animatable);
+            if (drawableCompat != null) {
+                mFab.setImageDrawable(drawableCompat);
+                drawableCompat.start();
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            TransitionManager.beginDelayedTransition(this, new OpenMorphTransition(mButtonContainer));
+        }
         animateButtons(true);
         animateBackground(true);
         mIsOpen = true;
     }
 
     private void close() {
-        AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_close_animatable, null);
-        mFab.setImageDrawable(drawable);
-        drawable.start();
-        TransitionManager.beginDelayedTransition(this, new CloseMorphTransition(mButtonContainer));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_close_animatable, null);
+            mFab.setImageDrawable(drawable);
+            drawable.start();
+        } else {
+            final AnimatedVectorDrawableCompat drawableCompat =
+                    AnimatedVectorDrawableCompat.create(getContext(), R.drawable.faboptions_ic_close_animatable);
+            if (drawableCompat != null) {
+                mFab.setImageDrawable(drawableCompat);
+                drawableCompat.start();
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            TransitionManager.beginDelayedTransition(this, new CloseMorphTransition(mButtonContainer));
+        }
         animateButtons(false);
         animateBackground(false);
         mIsOpen = false;
+    }
+
+    private void setInitialFabIcon() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            VectorDrawable drawable = (VectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_overflow, null);
+            mFab.setImageDrawable(drawable);
+        } else {
+            VectorDrawableCompat drawable = (VectorDrawableCompat) getResources().getDrawable(R.drawable.faboptions_ic_overflow, null);
+            mFab.setImageDrawable(drawable);
+        }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (mSeparator != null) {
+            ViewGroup.LayoutParams separatorLayoutParams = mSeparator.getLayoutParams();
+            separatorLayoutParams.width = mFab.getMeasuredWidth();
+            separatorLayoutParams.height = mFab.getMeasuredHeight();
+            mSeparator.setLayoutParams(separatorLayoutParams);
+        }
     }
 
     private void animateBackground(final boolean isOpen) {
@@ -187,33 +228,38 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         return mIsOpen;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private static class OpenMorphTransition extends TransitionSet {
         OpenMorphTransition(ViewGroup viewGroup) {
-
             ChangeBounds changeBound = new ChangeBounds();
             changeBound.excludeChildren(R.id.button_container, true);
 
-            ChangeTransform changeTransform = new ChangeTransform();
-            for (int i = 0; i < viewGroup.getChildCount(); i++) {
-                changeTransform.addTarget(viewGroup.getChildAt(i));
-            }
             addTransition(changeBound);
-            addTransition(changeTransform);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                ChangeTransform changeTransform = new ChangeTransform();
+                for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                    changeTransform.addTarget(viewGroup.getChildAt(i));
+                }
+                addTransition(changeTransform);
+            }
             setOrdering(TransitionSet.ORDERING_SEQUENTIAL);
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private static class CloseMorphTransition extends TransitionSet {
         CloseMorphTransition(ViewGroup viewGroup) {
             ChangeBounds changeBound = new ChangeBounds();
             changeBound.excludeChildren(R.id.button_container, true);
 
-            ChangeTransform changeTransform = new ChangeTransform();
-            for (int i = 0; i < viewGroup.getChildCount(); i++) {
-                changeTransform.addTarget(viewGroup.getChildAt(i));
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                ChangeTransform changeTransform = new ChangeTransform();
+                for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                    changeTransform.addTarget(viewGroup.getChildAt(i));
+                }
+                changeTransform.setDuration(CLOSE_MORPH_TRANSFORM_DURATION);
+                addTransition(changeTransform);
             }
-            changeTransform.setDuration(CLOSE_MORPH_TRANSFORM_DURATION);
-            addTransition(changeTransform);
             addTransition(changeBound);
             setOrdering(TransitionSet.ORDERING_TOGETHER);
         }
