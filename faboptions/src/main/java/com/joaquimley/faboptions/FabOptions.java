@@ -35,6 +35,7 @@ import android.transition.ChangeTransform;
 import android.transition.TransitionManager;
 import android.transition.TransitionSet;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -98,7 +99,11 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 
     public void setButtonsMenu(@MenuRes int menuId) {
         Context context = getContext();
-        setButtonsMenu(context, menuId);
+        if(context != null) {
+            setButtonsMenu(context, menuId);
+        } else {
+            Log.e(TAG, "Context is null");
+        }
     }
 
     /**
