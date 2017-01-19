@@ -22,8 +22,9 @@
         android:id="@+id/background"
         android:layout_width="0dp"
         android:layout_height="@dimen/faboptions_button_layout_height"
-        android:layout_gravity="center" />
-
+        android:layout_gravity="center"
+        android:background="@drawable/faboptions_background" />
+    
     <com.joaquimley.faboptions.FabOptionsButtonContainer
         android:id="@+id/button_container"
         android:layout_width="wrap_content"

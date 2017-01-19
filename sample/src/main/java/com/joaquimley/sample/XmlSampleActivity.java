@@ -36,6 +36,7 @@ import static com.joaquimley.faboptions.sample.R.id.toolbar;
 /**
  * Faboptions sample via XML {@see R.layout.activity_sample_xml}
  */
+
 public class XmlSampleActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;

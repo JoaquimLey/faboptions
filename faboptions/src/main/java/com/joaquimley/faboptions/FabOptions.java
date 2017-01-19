@@ -19,16 +19,16 @@ package com.joaquimley.faboptions;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.os.Build;
 import android.support.annotation.MenuRes;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
-import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.widget.AppCompatDrawableManager;
 import android.support.v7.widget.AppCompatImageView;
 import android.transition.ChangeBounds;
 import android.transition.ChangeTransform;
@@ -41,6 +41,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import static com.joaquimley.faboptions.R.drawable.faboptions_ic_overflow;
 
 /**
  * FabOptions component
@@ -84,6 +86,10 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 
         mBackground = findViewById(R.id.background);
         mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.button_container);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            Drawable drawable = AppCompatDrawableManager.get().getDrawable(context, R.drawable.faboptions_background);
+            mButtonContainer.setBackground(drawable);
+        }
 
         mFab = (FloatingActionButton) findViewById(R.id.faboptions_fab);
         mFab.setOnClickListener(this);
@@ -159,11 +165,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
             mFab.setImageDrawable(drawable);
             drawable.start();
         } else {
-            final AnimatedVectorDrawableCompat drawableCompat = AnimatedVectorDrawableCompat.create(getContext(), R.drawable.faboptions_ic_menu_animatable);
-            if (drawableCompat != null) {
-                mFab.setImageDrawable(drawableCompat);
-                drawableCompat.start();
-            }
+            mFab.setImageResource(R.drawable.faboptions_ic_close);
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -180,12 +182,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
             mFab.setImageDrawable(drawable);
             drawable.start();
         } else {
-            final AnimatedVectorDrawableCompat drawableCompat =
-                    AnimatedVectorDrawableCompat.create(getContext(), R.drawable.faboptions_ic_close_animatable);
-            if (drawableCompat != null) {
-                mFab.setImageDrawable(drawableCompat);
-                drawableCompat.start();
-            }
+            mFab.setImageResource(R.drawable.faboptions_ic_overflow);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             TransitionManager.beginDelayedTransition(this, new CloseMorphTransition(mButtonContainer));
@@ -197,11 +194,10 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 
     private void setInitialFabIcon() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            VectorDrawable drawable = (VectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_overflow, null);
+            VectorDrawable drawable = (VectorDrawable) getResources().getDrawable(faboptions_ic_overflow, null);
             mFab.setImageDrawable(drawable);
         } else {
-            VectorDrawableCompat drawable = (VectorDrawableCompat) getResources().getDrawable(R.drawable.faboptions_ic_overflow, null);
-            mFab.setImageDrawable(drawable);
+            mFab.setImageResource(R.drawable.faboptions_ic_overflow);
         }
     }
 
