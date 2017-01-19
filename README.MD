@@ -3,7 +3,7 @@
 #FabOptions
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-FabOptions-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/4734)
 [![MaterialUp](https://img.shields.io/badge/MaterialUp-FabOptions-blue.svg?style=flat)](https://material.uplabs.com/posts/faboptions)
-[![Bintray](https://img.shields.io/badge/Bintray-v1.0.1-brightgreen.svg?style=flat)](https://bintray.com/joaquimleyapps/opensource/com.github.joaquimley%3Afaboptions/1.0.1)
+[![Bintray](https://img.shields.io/badge/Bintray-v1.0.1-brightgreen.svg?style=flat)](https://bintray.com/joaquimleyapps/opensource/com.github.joaquimley%3Afaboptions/1.0.2)
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-21-red.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-25-green.svg?style=true)
 
@@ -27,7 +27,7 @@ Android implementation
 - Import gradle dependency:
 
 		dependencies {
-	 	   	compile 'com.github.joaquimley:faboptions:1.0.1'
+	 	   	compile 'com.github.joaquimley:faboptions:1.0.2'
 		}
 		
 
