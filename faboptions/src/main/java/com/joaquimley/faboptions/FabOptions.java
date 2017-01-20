@@ -156,6 +156,32 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         button.setOnClickListener(this);
     }
 
+    public boolean setButtonColor(int buttonId, int color) {
+        for (int i = 0; i < mButtonContainer.getChildCount(); i++) {
+            if (mMenu.getItem(i).getItemId() == buttonId) {
+                return styleButton(i, color);
+            }
+        }
+        Log.e(TAG, "Couldn't find button with id " + buttonId);
+        return false;
+    }
+
+    public boolean styleButton(int buttonIndex, int color) {
+        if (buttonIndex >= (mButtonContainer.getChildCount() / 2)) {
+            // Ugly hacky way to deal with the separator view index
+            buttonIndex++;
+        }
+
+        if (buttonIndex >= mButtonContainer.getChildCount()) {
+            Log.e(TAG, "Button at " + buttonIndex + " is null (index out of bounds)");
+            return false;
+        }
+
+        AppCompatImageView imageView = (AppCompatImageView) mButtonContainer.getChildAt(buttonIndex);
+        imageView.setColorFilter(ContextCompat.getColor(getContext(), color));
+        return true;
+    }
+
     @Override
     public void onClick(View v) {
         int viewId = v.getId();
