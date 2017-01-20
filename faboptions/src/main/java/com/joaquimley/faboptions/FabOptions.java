@@ -17,18 +17,21 @@
 package com.joaquimley.faboptions;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.MenuRes;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.widget.AppCompatDrawableManager;
 import android.support.v7.widget.AppCompatImageView;
 import android.transition.ChangeBounds;
 import android.transition.ChangeTransform;
@@ -36,6 +39,7 @@ import android.transition.TransitionManager;
 import android.transition.TransitionSet;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -74,41 +78,55 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 
     public FabOptions(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mIsOpen = false;
         initViews(context);
-        if (attrs != null) {
-            inflateButtonsFromAttrs(context, attrs);
-        }
+
+        TypedArray fabOptionsAttributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.FabOptions, 0, 0);
+        styleComponent(context, fabOptionsAttributes);
+        inflateButtonsFromAttrs(context, fabOptionsAttributes);
     }
 
     private void initViews(Context context) {
         inflate(context, R.layout.faboptions_layout, this);
-        mIsOpen = false;
-
         mBackground = findViewById(R.id.background);
         mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.button_container);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            Drawable drawable = AppCompatDrawableManager.get().getDrawable(context, R.drawable.faboptions_background);
-            mButtonContainer.setBackground(drawable);
-        }
-
         mFab = (FloatingActionButton) findViewById(R.id.faboptions_fab);
         mFab.setOnClickListener(this);
         setInitialFabIcon();
     }
 
-    private void inflateButtonsFromAttrs(Context context, AttributeSet attrs) {
-        TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.FabOptions, 0, 0);
+    private void styleComponent(Context context, TypedArray attributes) {
+
+        int fabColor = attributes.getColor(R.styleable.FabOptions_fab_color, getThemeAccentColor(context));
+        int backgroundColor = attributes.getColor(R.styleable.FabOptions_background_color, fabColor);
+
+        Drawable backgroundShape = ContextCompat.getDrawable(context, R.drawable.faboptions_background);
+        backgroundShape.setColorFilter(backgroundColor, PorterDuff.Mode.ADD);
+
+        mBackground.setBackground(backgroundShape);
+        mFab.setBackgroundTintList(ColorStateList.valueOf(fabColor));
+    }
+
+    @ColorInt
+    private int getThemeAccentColor(final Context context) {
+        final TypedValue value = new TypedValue();
+        context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
+        return value.data;
+    }
+
+    private void inflateButtonsFromAttrs(Context context, TypedArray attributes) {
         if (attributes.hasValue(R.styleable.FabOptions_button_menu)) {
             setButtonsMenu(context, attributes.getResourceId(R.styleable.FabOptions_button_menu, 0));
         }
     }
 
+
     public void setButtonsMenu(@MenuRes int menuId) {
         Context context = getContext();
-        if(context != null) {
+        if (context != null) {
             setButtonsMenu(context, menuId);
         } else {
-            Log.e(TAG, "Context is null");
+            Log.e(TAG, "Couldn't set buttons, context is null");
         }
     }
 

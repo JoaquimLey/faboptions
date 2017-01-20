@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,6 +39,10 @@ import static com.joaquimley.faboptions.sample.R.id.toolbar;
  */
 
 public class XmlSampleActivity extends AppCompatActivity implements View.OnClickListener {
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     private Toolbar mToolbar;
 
