@@ -16,6 +16,7 @@
 
 package com.joaquimley.faboptions;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -214,9 +215,11 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             TransitionManager.beginDelayedTransition(this, new OpenMorphTransition(mButtonContainer));
+            animateButtons(true);
+            animateBackground(true);
+        } else {
+            openCompatAnimation(mBackground);
         }
-        animateButtons(true);
-        animateBackground(true);
         mIsOpen = true;
     }
 
@@ -230,9 +233,12 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             TransitionManager.beginDelayedTransition(this, new CloseMorphTransition(mButtonContainer));
+            animateButtons(false);
+            animateBackground(false);
+        } else {
+            closeCompatAnimation(mBackground);
+//            closeCompatAnimation(mButtonContainer);
         }
-        animateButtons(false);
-        animateBackground(false);
         mIsOpen = false;
     }
 
@@ -260,6 +266,19 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         ViewGroup.LayoutParams backgroundLayoutParams = mBackground.getLayoutParams();
         backgroundLayoutParams.width = isOpen ? mButtonContainer.getMeasuredWidth() : NO_DIMENSION;
         mBackground.setLayoutParams(backgroundLayoutParams);
+    }
+
+    private void openCompatAnimation(View view) {
+        ObjectAnimator anim = ObjectAnimator.ofFloat(view, "scaleX", mButtonContainer.getMeasuredWidth());
+        anim.setDuration(3000); // duration 3 seconds
+        anim.start();
+    }
+
+
+    private void closeCompatAnimation(View view) {
+        ObjectAnimator anim = ObjectAnimator.ofFloat(view, "scaleX", 0.0f);
+        anim.setDuration(CLOSE_MORPH_TRANSFORM_DURATION);
+        anim.start();
     }
 
     private void animateButtons(boolean isOpen) {

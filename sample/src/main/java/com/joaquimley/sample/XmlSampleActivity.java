@@ -61,7 +61,11 @@ public class XmlSampleActivity extends AppCompatActivity implements View.OnClick
 
         FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
         fabOptions.setOnClickListener(this);
-        if(!fabOptions.styleButton(0, R.color.colorAccent)) {
+        if(!fabOptions.setButtonColor(R.id.faboptions_favorite, R.color.colorAccent)) {
+            Log.e("style button", "ERRORR");
+
+        }
+        if(!fabOptions.styleButton(3, R.color.colorAccent)) {
             Log.e("style button", "ERRORR");
         }
     }
