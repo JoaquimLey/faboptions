@@ -81,6 +81,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         super(context, attrs, defStyleAttr);
         mIsOpen = false;
         initViews(context);
+        setInitialFabIcon();
 
         TypedArray fabOptionsAttributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.FabOptions, 0, 0);
         styleComponent(context, fabOptionsAttributes);
@@ -93,11 +94,20 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.button_container);
         mFab = (FloatingActionButton) findViewById(R.id.faboptions_fab);
         mFab.setOnClickListener(this);
-        setInitialFabIcon();
+    }
+
+    private void setInitialFabIcon() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            VectorDrawable drawable = (VectorDrawable) getResources().getDrawable(faboptions_ic_overflow, null);
+            mFab.setImageDrawable(drawable);
+        } else {
+            mFab.setImageResource(R.drawable.faboptions_ic_overflow);
+        }
     }
 
     private void styleComponent(Context context, TypedArray attributes) {
-
+        // If not set, the background same colour as the FAB, which if not set
+        // it will use the default accent color
         int fabColor = attributes.getColor(R.styleable.FabOptions_fab_color, getThemeAccentColor(context));
         int backgroundColor = attributes.getColor(R.styleable.FabOptions_background_color, fabColor);
 
@@ -121,13 +131,12 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         }
     }
 
-
     public void setButtonsMenu(@MenuRes int menuId) {
         Context context = getContext();
         if (context != null) {
             setButtonsMenu(context, menuId);
         } else {
-            Log.e(TAG, "Couldn't set buttons, context is null");
+            Log.w(TAG, "Couldn't set buttons, context is null");
         }
     }
 
@@ -146,8 +155,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 
     private void addButtonsFromMenu(Context context, Menu menu) {
         for (int i = 0; i < menu.size(); i++) {
-            MenuItem menuItem = menu.getItem(i);
-            addButton(context, menuItem);
+            addButton(context, menu.getItem(i));
         }
     }
 
@@ -163,13 +171,13 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
                 return styleButton(i, color);
             }
         }
-        Log.e(TAG, "Couldn't find button with id " + buttonId);
+        Log.d(TAG, "setButtonColor(): Couldn't find button with id " + buttonId);
         return false;
     }
 
     public boolean styleButton(int buttonIndex, int color) {
         if (buttonIndex >= (mButtonContainer.getChildCount() / 2)) {
-            // Ugly hacky way to deal with the separator view index
+            // Hacky way to deal with the separator view index
             buttonIndex++;
         }
 
@@ -185,8 +193,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        int viewId = v.getId();
-        if (viewId == R.id.faboptions_fab) {
+        if (v.getId() == R.id.faboptions_fab) {
             if (mIsOpen) {
                 close();
             } else {
@@ -206,7 +213,8 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 
     private void open() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_menu_animatable, null);
+            AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources()
+                    .getDrawable(R.drawable.faboptions_ic_menu_animatable, null);
             mFab.setImageDrawable(drawable);
             drawable.start();
         } else {
@@ -215,11 +223,12 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             TransitionManager.beginDelayedTransition(this, new OpenMorphTransition(mButtonContainer));
-            animateButtons(true);
-            animateBackground(true);
-        } else {
-            openCompatAnimation(mBackground);
         }
+        animateBackground(true);
+        animateButtons(true);
+//        } else {
+//            openCompatAnimation();
+//        }
         mIsOpen = true;
     }
 
@@ -233,22 +242,12 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             TransitionManager.beginDelayedTransition(this, new CloseMorphTransition(mButtonContainer));
-            animateButtons(false);
-            animateBackground(false);
-        } else {
-            closeCompatAnimation(mBackground);
-//            closeCompatAnimation(mButtonContainer);
+//        } else {
+//            closeCompatAnimation();
         }
+        animateButtons(false);
+        animateBackground(false);
         mIsOpen = false;
-    }
-
-    private void setInitialFabIcon() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            VectorDrawable drawable = (VectorDrawable) getResources().getDrawable(faboptions_ic_overflow, null);
-            mFab.setImageDrawable(drawable);
-        } else {
-            mFab.setImageResource(R.drawable.faboptions_ic_overflow);
-        }
     }
 
     @Override
@@ -268,17 +267,18 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         mBackground.setLayoutParams(backgroundLayoutParams);
     }
 
-    private void openCompatAnimation(View view) {
-        ObjectAnimator anim = ObjectAnimator.ofFloat(view, "scaleX", mButtonContainer.getMeasuredWidth());
-        anim.setDuration(3000); // duration 3 seconds
+    private void openCompatAnimation() {
+        ObjectAnimator anim = ObjectAnimator.ofFloat(mBackground, "scaleX", 1.0f);
+        anim.setDuration(30000); // duration 3 seconds
         anim.start();
     }
 
 
-    private void closeCompatAnimation(View view) {
-        ObjectAnimator anim = ObjectAnimator.ofFloat(view, "scaleX", 0.0f);
-        anim.setDuration(CLOSE_MORPH_TRANSFORM_DURATION);
+    private void closeCompatAnimation() {
+        ObjectAnimator anim = ObjectAnimator.ofFloat(mBackground, "scaleX", 0.0f);
+        anim.setDuration(3000);
         anim.start();
+        animateButtons(false);
     }
 
     private void animateButtons(boolean isOpen) {
@@ -293,12 +293,13 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private static class OpenMorphTransition extends TransitionSet {
+    private class OpenMorphTransition extends TransitionSet {
         OpenMorphTransition(ViewGroup viewGroup) {
+
             ChangeBounds changeBound = new ChangeBounds();
             changeBound.excludeChildren(R.id.button_container, true);
-
             addTransition(changeBound);
+
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 ChangeTransform changeTransform = new ChangeTransform();
                 for (int i = 0; i < viewGroup.getChildCount(); i++) {
@@ -306,13 +307,15 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
                 }
                 addTransition(changeTransform);
             }
+
             setOrdering(TransitionSet.ORDERING_SEQUENTIAL);
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private static class CloseMorphTransition extends TransitionSet {
+    private class CloseMorphTransition extends TransitionSet {
         CloseMorphTransition(ViewGroup viewGroup) {
+
             ChangeBounds changeBound = new ChangeBounds();
             changeBound.excludeChildren(R.id.button_container, true);
 
@@ -324,6 +327,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
                 changeTransform.setDuration(CLOSE_MORPH_TRANSFORM_DURATION);
                 addTransition(changeTransform);
             }
+
             addTransition(changeBound);
             setOrdering(TransitionSet.ORDERING_TOGETHER);
         }
