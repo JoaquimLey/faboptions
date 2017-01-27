@@ -74,7 +74,7 @@ Android implementation
 
 **Programmatically**
 
-- Bind the buttons menu on your FabOptions instance with FabOptions#setMenu.
+- Bind the buttons menu on your FabOptions instance with FabOptions#setMenu(Menu).
 
 ```java
 FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
@@ -88,6 +88,37 @@ fabOptions.setButtonsMenu(R.menu.your_fab_buttons);
 - Set your FabOptions instance click listener.
 
 - Handle the click events for each button id defined on the `menu.xml`.
+
+
+## Customizing
+
+You can change the color of the component, both the FAB and the "background" individually, **unless specified** the background will **always** adopt the same value as the ```app:fab_color``` attribute (default is the theme's accent color).
+
+
+```xml
+ <com.joaquimley.faboptions.FabOptions
+        android:id="@+id/fab_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:background_color="@color/fabOptionsBackgroundColor"
+        app:fab_color="@color/fabOptionsFabColor" />
+```	
+
+You can also use **Java**
+
+```java
+fabOptions.setFabColor(R.color.fabOptionsFabColor);
+fabOptions.setBackgroundColor(R.color.fabOptionsBackgroundColor);
+```
+
+*Note: One is not depedent on the other, you can costomize individualy.*
+
+**Changing button color**
+```java
+fabOptions.setButtonColor(R.id.faboptions_favorite, R.color.colorAccent)
+```
+
+This will return a boolean value if it's able to change the color.
 
 
 ###The sample is also available on the Playstore
