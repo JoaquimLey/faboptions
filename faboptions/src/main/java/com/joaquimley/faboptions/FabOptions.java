@@ -114,7 +114,11 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         Drawable backgroundShape = ContextCompat.getDrawable(context, R.drawable.faboptions_background);
         backgroundShape.setColorFilter(backgroundColor, PorterDuff.Mode.ADD);
 
-        mBackground.setBackground(backgroundShape);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mBackground.setBackground(backgroundShape);
+        } else {
+            mBackground.setBackgroundDrawable(backgroundShape);
+        }
         mFab.setBackgroundTintList(ColorStateList.valueOf(fabColor));
     }
 
