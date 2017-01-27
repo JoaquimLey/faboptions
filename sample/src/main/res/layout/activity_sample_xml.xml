@@ -49,7 +49,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:button_menu="@menu/menu_faboptions" />
+        app:button_menu="@menu/menu_faboptions"
+        app:background_color="@color/colorPrimary"
+        app:fab_color="@color/colorPrimaryDark" />
 
 </android.support.design.widget.CoordinatorLayout>
 

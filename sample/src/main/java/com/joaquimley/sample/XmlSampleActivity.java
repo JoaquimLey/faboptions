@@ -21,7 +21,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,7 +38,12 @@ import static com.joaquimley.faboptions.sample.R.id.toolbar;
 /**
  * Faboptions sample via XML {@see R.layout.activity_sample_xml}
  */
+
 public class XmlSampleActivity extends AppCompatActivity implements View.OnClickListener {
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     private Toolbar mToolbar;
 
@@ -54,6 +61,10 @@ public class XmlSampleActivity extends AppCompatActivity implements View.OnClick
 
         FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
         fabOptions.setOnClickListener(this);
+        if(!fabOptions.setButtonColor(R.id.faboptions_favorite, R.color.colorAccent)) {
+            Log.e("style button", "ERRORR");
+
+        }
     }
 
     @Override

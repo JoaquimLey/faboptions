@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) Joaquim Ley 2016. All Rights Reserved.
+  ~ Copyright (c) Joaquim Ley 2017. All Rights Reserved.
   ~ <p/>
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -15,10 +15,20 @@
   ~ limitations under the License.
   -->
 
-<resources>
-    <declare-styleable name="FabOptions">
-        <attr name="button_menu" format="reference" type="menu" />
-        <attr name="background_color" format="reference" type="int" />
-        <attr name="fab_color" format="reference" type="int" />
-    </declare-styleable>
-</resources>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+     android:interpolator="@android:anim/decelerate_interpolator">
+    <scale
+        android:duration="1000"
+        android:fromXScale="0"
+        android:fromYScale="0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:repeatMode="restart"
+        android:toXScale="1.0"
+        android:toYScale="1.0" />
+
+    <alpha
+        android:duration="50"
+        android:fromAlpha="0.0"
+        android:toAlpha="0.2" />
+</set>
