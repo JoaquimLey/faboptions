@@ -26,6 +26,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.MenuRes;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
@@ -111,6 +112,30 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         int fabColor = attributes.getColor(R.styleable.FabOptions_fab_color, getThemeAccentColor(context));
         int backgroundColor = attributes.getColor(R.styleable.FabOptions_background_color, fabColor);
 
+        setBackgroundColor(context, backgroundColor);
+        mFab.setBackgroundTintList(ColorStateList.valueOf(fabColor));
+    }
+
+    public void setFabColor(@ColorRes int fabColor) {
+        Context context = getContext();
+        if (context != null) {
+            @ColorInt int colorId = ContextCompat.getColor(context, fabColor);
+            mFab.setBackgroundTintList(ColorStateList.valueOf(colorId));
+        }
+    }
+
+    public void setBackgroundColor(@ColorRes int backgroundColor) {
+        Context context = getContext();
+        if (context != null) {
+            @ColorInt int color = ContextCompat.getColor(context, backgroundColor);
+            setBackgroundColor(context, color);
+        } else {
+            Log.w(TAG, "Couldn't set background color, context is null");
+        }
+    }
+
+
+    private void setBackgroundColor(Context context, @ColorInt int backgroundColor) {
         Drawable backgroundShape = ContextCompat.getDrawable(context, R.drawable.faboptions_background);
         backgroundShape.setColorFilter(backgroundColor, PorterDuff.Mode.ADD);
 
@@ -119,7 +144,6 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         } else {
             mBackground.setBackgroundDrawable(backgroundShape);
         }
-        mFab.setBackgroundTintList(ColorStateList.valueOf(fabColor));
     }
 
     @ColorInt
@@ -133,6 +157,16 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         if (attributes.hasValue(R.styleable.FabOptions_button_menu)) {
             setButtonsMenu(context, attributes.getResourceId(R.styleable.FabOptions_button_menu, 0));
         }
+    }
+
+    public boolean setButtonColor(int buttonId, @ColorRes int color) {
+        for (int i = 0; i < mButtonContainer.getChildCount(); i++) {
+            if (mMenu.getItem(i).getItemId() == buttonId) {
+                return styleButton(i, color);
+            }
+        }
+        Log.d(TAG, "setButtonColor(): Couldn't find button with id " + buttonId);
+        return false;
     }
 
     public void setButtonsMenu(@MenuRes int menuId) {
@@ -169,17 +203,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         button.setOnClickListener(this);
     }
 
-    public boolean setButtonColor(int buttonId, int color) {
-        for (int i = 0; i < mButtonContainer.getChildCount(); i++) {
-            if (mMenu.getItem(i).getItemId() == buttonId) {
-                return styleButton(i, color);
-            }
-        }
-        Log.d(TAG, "setButtonColor(): Couldn't find button with id " + buttonId);
-        return false;
-    }
-
-    public boolean styleButton(int buttonIndex, int color) {
+    private boolean styleButton(int buttonIndex, @ColorRes int color) {
         if (buttonIndex >= (mButtonContainer.getChildCount() / 2)) {
             // Hacky way to deal with the separator view index
             buttonIndex++;

@@ -65,9 +65,6 @@ public class XmlSampleActivity extends AppCompatActivity implements View.OnClick
             Log.e("style button", "ERRORR");
 
         }
-        if(!fabOptions.styleButton(3, R.color.colorAccent)) {
-            Log.e("style button", "ERRORR");
-        }
     }
 
     @Override
