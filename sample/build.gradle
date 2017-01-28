@@ -24,8 +24,8 @@ android {
         applicationId "com.joaquimley.faboptions.sample"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 5
-        versionName "1.0.0"
+        versionCode 6
+        versionName "1.0.1"
     }
 
     buildTypes {
@@ -41,6 +41,6 @@ dependencies {
     final FABOPTIONS_VERSION = '1.1.0'
 
     compile "com.android.support:design:$DESIGN_LIBRARY_VERSION"
-    compile "com.github.joaquimley:faboptions:$FABOPTIONS_VERSION"
-//    compile project(':faboptions')
+//    compile "com.github.joaquimley:faboptions:$FABOPTIONS_VERSION"
+    compile project(':faboptions')
 }
