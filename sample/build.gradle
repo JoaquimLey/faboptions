@@ -26,7 +26,6 @@ android {
         targetSdkVersion 25
         versionCode 5
         versionName "1.0.0"
-        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
