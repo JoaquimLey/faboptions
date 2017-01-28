@@ -23,10 +23,10 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 14
         targetSdkVersion 25
-        versionCode 7
-        versionName "1.0.2"
+        versionCode 9
+        versionName "1.1.0"
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -41,7 +41,6 @@ android {
 dependencies {
     final DESIGN_LIBRARY_VERSION = '25.1.0'
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:design:$DESIGN_LIBRARY_VERSION"
 }
 apply from: 'https://raw.githubusercontent.com/JoaquimLey/jcenter-config/master/deploy.gradle'

@@ -38,5 +38,4 @@
         <activity android:name="com.joaquimley.sample.JavaSampleActivity" />
 
     </application>
-
 </manifest>

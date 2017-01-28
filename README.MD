@@ -3,7 +3,7 @@
 #FabOptions
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-FabOptions-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/4734)
 [![MaterialUp](https://img.shields.io/badge/MaterialUp-FabOptions-blue.svg?style=flat)](https://material.uplabs.com/posts/faboptions)
-[![Bintray](https://img.shields.io/badge/Bintray-v1.0.1-brightgreen.svg?style=flat)](https://bintray.com/joaquimleyapps/opensource/com.github.joaquimley%3Afaboptions/1.0.2)
+[![Bintray](https://img.shields.io/badge/Bintray-v1.1.0-brightgreen.svg?style=flat)](https://bintray.com/joaquimleyapps/opensource/com.github.joaquimley%3Afaboptions/1.0.2)
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-21-red.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-25-green.svg?style=true)
 
@@ -27,9 +27,19 @@ Android implementation
 - Import gradle dependency:
 
 		dependencies {
-	 	   	compile 'com.github.joaquimley:faboptions:1.0.2'
+	 	   	compile 'com.github.joaquimley:faboptions:1.1.0'
 		}
-		
+
+- Add the component to your layout:
+
+```xml
+<com.joaquimley.faboptions.FabOptions
+	android:id="@+id/fab_options"
+ 	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+  	android:layout_gravity="bottom" />
+```  
+
 
 - Define a `menu.xml` file with your buttons information **e.g.**
 
@@ -56,31 +66,19 @@ Android implementation
         android:icon="@drawable/ic_share"
         android:title="Share" />
 </menu>
-```	
+```		       
 
+**XML**:
 
-- Add the component to your layout:
-
-```xml
-<com.joaquimley.faboptions.FabOptions
-	android:id="@+id/fab_options"
- 	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-  	android:layout_gravity="bottom" />
-```  	
-	       
-
-Via **XML**:
-
-- Bind the buttons menu by adding the  **custom attribute** `app:button_menu="@menu/your_fab_buttons"` to your component XML
+- Bind the buttons menu by adding the  **custom attribute** `app:button_menu="@menu/your_fab_buttons"` to your component XML.
 
 **Programmatically**
 
-- Bind the buttons menu on your FabOptions instance with FabOptions#setMenu()
+- Bind the buttons menu on your FabOptions instance with FabOptions#setMenu(Menu).
 
 ```java
 FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
-fabOptions.setButtonsMenu(this, R.menu.your_fab_buttons);
+fabOptions.setButtonsMenu(R.menu.your_fab_buttons);
 ```
        
        
@@ -90,6 +88,37 @@ fabOptions.setButtonsMenu(this, R.menu.your_fab_buttons);
 - Set your FabOptions instance click listener.
 
 - Handle the click events for each button id defined on the `menu.xml`.
+
+
+## Customizing
+
+You can change the color of the component, both the FAB and the "background" individually, **unless specified** the background will **always** adopt the same value as the ```app:fab_color``` attribute (default is the theme's accent color).
+
+
+```xml
+ <com.joaquimley.faboptions.FabOptions
+        android:id="@+id/fab_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:background_color="@color/fabOptionsBackgroundColor"
+        app:fab_color="@color/fabOptionsFabColor" />
+```	
+
+You can also use **Java**
+
+```java
+fabOptions.setFabColor(R.color.fabOptionsFabColor);
+fabOptions.setBackgroundColor(R.color.fabOptionsBackgroundColor);
+```
+
+*Note: One is not depedent on the other, you can costomize individualy.*
+
+**Changing button color**
+```java
+fabOptions.setButtonColor(R.id.faboptions_favorite, R.color.colorAccent)
+```
+
+This will return a boolean value if it's able to change the color.
 
 
 ###The sample is also available on the Playstore

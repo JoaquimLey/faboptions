@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) Joaquim Ley 2016. All Rights Reserved.
   ~ <p/>
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,8 +22,7 @@
         android:id="@+id/background"
         android:layout_width="0dp"
         android:layout_height="@dimen/faboptions_button_layout_height"
-        android:layout_gravity="center"
-        android:background="@drawable/faboptions_background" />
+        android:layout_gravity="center" />
 
     <com.joaquimley.faboptions.FabOptionsButtonContainer
         android:id="@+id/button_container"

@@ -15,7 +15,9 @@
   -->
 
 <animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@drawable/faboptions_ic_overflow">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:drawable="@drawable/faboptions_ic_overflow"
+    tools:targetApi="lollipop">
     <target
         android:name="main"
         android:animation="@animator/overflow_to_close" />

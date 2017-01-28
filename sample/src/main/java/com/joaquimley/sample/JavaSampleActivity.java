@@ -54,7 +54,9 @@ public class JavaSampleActivity extends AppCompatActivity implements View.OnClic
         setSupportActionBar(mToolbar);
 
         FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
-        fabOptions.setButtonsMenu(this, R.menu.menu_faboptions);
+        fabOptions.setButtonsMenu(R.menu.menu_faboptions);
+        fabOptions.setBackgroundColor(R.color.colorPrimaryDark);
+        fabOptions.setFabColor(R.color.colorAccent);
         fabOptions.setOnClickListener(this);
     }
 
