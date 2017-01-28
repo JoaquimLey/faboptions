@@ -46,6 +46,7 @@ public class XmlSampleActivity extends AppCompatActivity implements View.OnClick
     }
 
     private Toolbar mToolbar;
+    private FabOptions mFabOptions;
 
     public static Intent newStartIntent(Context context) {
         return new Intent(context, XmlSampleActivity.class);
@@ -59,32 +60,32 @@ public class XmlSampleActivity extends AppCompatActivity implements View.OnClick
         mToolbar.setTitle(getString(R.string.title_activity_xml));
         setSupportActionBar(mToolbar);
 
-        FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
-        fabOptions.setOnClickListener(this);
-        if(!fabOptions.setButtonColor(R.id.faboptions_favorite, R.color.colorAccent)) {
-            Log.e("style button", "ERRORR");
-
-        }
+        mFabOptions = (FabOptions) findViewById(R.id.fab_options);
+        mFabOptions.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.faboptions_favorite:
+                mFabOptions.setButtonColor(R.id.faboptions_favorite, R.color.colorAccent);
                 Toast.makeText(XmlSampleActivity.this, "Favorite", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.faboptions_textsms:
+                mFabOptions.setButtonColor(R.id.faboptions_textsms, R.color.colorAccent);
                 Toast.makeText(XmlSampleActivity.this, "Message", Toast.LENGTH_SHORT).show();
                 break;
 
 
             case R.id.faboptions_download:
+                mFabOptions.setButtonColor(R.id.faboptions_download, R.color.colorAccent);
                 Toast.makeText(XmlSampleActivity.this, "Download", Toast.LENGTH_SHORT).show();
                 break;
 
 
             case R.id.faboptions_share:
+                mFabOptions.setButtonColor(R.id.faboptions_share, R.color.colorAccent);
                 Toast.makeText(XmlSampleActivity.this, "Share", Toast.LENGTH_SHORT).show();
                 break;
 
