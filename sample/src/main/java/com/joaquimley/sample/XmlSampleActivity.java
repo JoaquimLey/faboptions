@@ -59,7 +59,6 @@ public class XmlSampleActivity extends AppCompatActivity implements View.OnClick
         mToolbar = (Toolbar) findViewById(toolbar);
         mToolbar.setTitle(getString(R.string.title_activity_xml));
         setSupportActionBar(mToolbar);
-
         mFabOptions = (FabOptions) findViewById(R.id.fab_options);
         mFabOptions.setOnClickListener(this);
     }
