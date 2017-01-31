@@ -39,7 +39,7 @@ android {
 }
 
 dependencies {
-    final DESIGN_LIBRARY_VERSION = '25.1.0'
+    final DESIGN_LIBRARY_VERSION = '25.1.1'
 
     compile "com.android.support:design:$DESIGN_LIBRARY_VERSION"
 }
