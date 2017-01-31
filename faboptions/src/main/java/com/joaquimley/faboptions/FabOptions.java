@@ -228,13 +228,14 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
                 open();
             }
         } else {
-            if (mListener != null) {
+            if (mListener != null && mIsOpen) {
                 mListener.onClick(v);
                 close();
             }
         }
     }
 
+    @Override
     public void setOnClickListener(View.OnClickListener listener) {
         mListener = listener;
     }
