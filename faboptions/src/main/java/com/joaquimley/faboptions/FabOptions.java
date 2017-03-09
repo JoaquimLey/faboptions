@@ -91,8 +91,8 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 
     private void initViews(Context context) {
         inflate(context, R.layout.faboptions_layout, this);
-        mBackground = findViewById(R.id.background);
-        mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.button_container);
+        mBackground = findViewById(R.id.faboptions_background);
+        mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.faboptions_button_container);
         mFab = (FloatingActionButton) findViewById(R.id.faboptions_fab);
         mFab.setOnClickListener(this);
     }
@@ -326,7 +326,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         OpenMorphTransition(ViewGroup viewGroup) {
 
             ChangeBounds changeBound = new ChangeBounds();
-            changeBound.excludeChildren(R.id.button_container, true);
+            changeBound.excludeChildren(R.id.faboptions_button_container, true);
             addTransition(changeBound);
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -346,7 +346,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         CloseMorphTransition(ViewGroup viewGroup) {
 
             ChangeBounds changeBound = new ChangeBounds();
-            changeBound.excludeChildren(R.id.button_container, true);
+            changeBound.excludeChildren(R.id.faboptions_button_container, true);
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 ChangeTransform changeTransform = new ChangeTransform();
