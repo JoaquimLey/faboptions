@@ -169,7 +169,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         return false;
     }
 
-    public void setMenu(Menu menu) {
+    public void setButtonsMenu(Menu menu) {
         Context context = getContext();
         if (context != null) {
             mMenu = menu;
