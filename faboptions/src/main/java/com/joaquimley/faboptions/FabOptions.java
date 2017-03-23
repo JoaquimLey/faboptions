@@ -169,6 +169,16 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         return false;
     }
 
+    public void setButtonsMenu(Menu menu) {
+        Context context = getContext();
+        if (context != null) {
+            mMenu = menu;
+            setupButtonsMenu(context);
+        } else {
+            Log.w(TAG, "Couldn't set buttons, context is null");
+        }
+    }
+
     public void setButtonsMenu(@MenuRes int menuId) {
         Context context = getContext();
         if (context != null) {
@@ -186,6 +196,14 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         mMenu = new MenuBuilder(context);
         SupportMenuInflater menuInf = new SupportMenuInflater(context);
         menuInf.inflate(menuId, mMenu);
+        setupButtonsMenu(context);
+    }
+
+    private void setupButtonsMenu(Context context) {
+        if (mMenu == null) {
+            return;
+        }
+
         addButtonsFromMenu(context, mMenu);
         mSeparator = mButtonContainer.addSeparator(context);
         animateButtons(false);
