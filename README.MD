@@ -1,14 +1,14 @@
 ![AppIcon](../master/sample/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
 
-#FabOptions
+# FabOptions
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-FabOptions-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/4734)
 [![MaterialUp](https://img.shields.io/badge/MaterialUp-FabOptions-blue.svg?style=flat)](https://material.uplabs.com/posts/faboptions)
 [![Bintray](https://img.shields.io/badge/Bintray-v1.1.2-brightgreen.svg?style=flat)](https://bintray.com/leyopensource/FabOptions/com.github.joaquimley%3Afaboptions/1.1.2)
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-14-green.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-25-green.svg?style=true)
 
-###A multi-functional FAB component with customizable options.
-###Read more on the blog post: < WIP-Soon >
+### A multi-functional FAB component with customizable options.
+### Read more on the blog post: < WIP-Soon >
 
 **Special thanks to [André Mion](https://github.com/andremion)** for the help provided on building this component.
 
@@ -23,7 +23,7 @@ Android implementation
 ![Gif android sample](../master/art/faboptions_demo.gif)
 
 
-##How to use
+## How to use
 - Import gradle dependency:
 
 		dependencies {
@@ -121,7 +121,7 @@ fabOptions.setButtonColor(R.id.faboptions_favorite, R.color.colorAccent)
 This will return a boolean value if it's able to change the color.
 
 
-###The sample is also available on the Playstore
+### The sample is also available on the Playstore
 
 [![Get it on Google Play](../master/art/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.joaquimley.faboptions.sample)
 
