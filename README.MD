@@ -125,12 +125,12 @@ This will return a boolean value if it's able to change the color.
 
 [![Get it on Google Play](../master/art/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.joaquimley.faboptions.sample)
 
+**Issues:**
+Fell free to open a new issue. Follow the [ISSUE_TEMPLATE.MD](../development/ISSUE_TEMPLATE.MD)
+
 ## Contributing
 
 Contributions are always welcome!
-
-**Issues:**
-Fell free to open a new issue. Follow the [ISSUE_TEMPLATE.MD](../development/ISSUE_TEMPLATE.MD)
 
 Follow the "fork-and-pull" Git workflow.
 
