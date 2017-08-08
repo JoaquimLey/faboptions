@@ -37,6 +37,7 @@ import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.AppCompatImageView;
 import android.transition.ChangeBounds;
 import android.transition.ChangeTransform;
+import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.transition.TransitionSet;
 import android.util.AttributeSet;
@@ -60,6 +61,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
     private static final int NO_DIMENSION = 0;
     private static final long CLOSE_MORPH_TRANSFORM_DURATION = 70;
 
+    private boolean mIsAnimating;
     private boolean mIsOpen;
     private View.OnClickListener mListener;
 
@@ -221,16 +223,20 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.faboptions_fab) {
-            if (mIsOpen) {
-                close();
+        if (!mIsAnimating) {
+            mIsAnimating = true;
+
+            if (v.getId() == R.id.faboptions_fab) {
+                if (mIsOpen) {
+                    close();
+                } else {
+                    open();
+                }
             } else {
-                open();
-            }
-        } else {
-            if (mListener != null && mIsOpen) {
-                mListener.onClick(v);
-                close();
+                if (mListener != null && mIsOpen) {
+                    mListener.onClick(v);
+                    close();
+                }
             }
         }
     }
@@ -251,13 +257,35 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            TransitionManager.beginDelayedTransition(this, new OpenMorphTransition(mButtonContainer));
+            final TransitionSet transitionSet = new OpenMorphTransition(mButtonContainer);
+            transitionSet.addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionStart(final Transition transition) {
+                }
+
+                @Override
+                public void onTransitionEnd(final Transition transition) {
+                    mIsAnimating = false;
+                }
+
+                @Override
+                public void onTransitionCancel(final Transition transition) {
+                }
+
+                @Override
+                public void onTransitionPause(final Transition transition) {
+                }
+
+                @Override
+                public void onTransitionResume(final Transition transition) {
+                }
+            });
+
+            TransitionManager.beginDelayedTransition(this, transitionSet);
         }
         animateBackground(true);
         animateButtons(true);
-//        } else {
-//            openCompatAnimation();
-//        }
+
         mIsOpen = true;
     }
 
@@ -270,9 +298,31 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
             mFab.setImageResource(R.drawable.faboptions_ic_overflow);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            TransitionManager.beginDelayedTransition(this, new CloseMorphTransition(mButtonContainer));
-//        } else {
-//            closeCompatAnimation();
+            final TransitionSet transitionSet = new CloseMorphTransition(mButtonContainer);
+            transitionSet.addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionStart(final Transition transition) {
+                }
+
+                @Override
+                public void onTransitionEnd(final Transition transition) {
+                    mIsAnimating = false;
+                }
+
+                @Override
+                public void onTransitionCancel(final Transition transition) {
+                }
+
+                @Override
+                public void onTransitionPause(final Transition transition) {
+                }
+
+                @Override
+                public void onTransitionResume(final Transition transition) {
+                }
+            });
+
+            TransitionManager.beginDelayedTransition(this, transitionSet);
         }
         animateButtons(false);
         animateBackground(false);
