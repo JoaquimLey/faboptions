@@ -55,7 +55,7 @@ public class JavaSampleActivity extends AppCompatActivity implements View.OnClic
 
         FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
         fabOptions.setButtonsMenu(R.menu.menu_faboptions);
-        fabOptions.setBackgroundColor(R.color.colorPrimaryDark);
+        fabOptions.setBackgroundResColor(R.color.colorPrimaryDark);
         fabOptions.setFabColor(R.color.colorAccent);
         fabOptions.setOnClickListener(this);
     }

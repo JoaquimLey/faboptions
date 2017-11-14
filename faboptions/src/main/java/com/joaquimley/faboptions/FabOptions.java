@@ -126,7 +126,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         }
     }
 
-    public void setBackgroundColor(@ColorRes int backgroundColor) {
+    public void setBackgroundResColor(@ColorRes int backgroundColor) {
         Context context = getContext();
         if (context != null) {
             @ColorInt int color = ContextCompat.getColor(context, backgroundColor);
@@ -137,7 +137,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
     }
 
 
-    private void setBackgroundColor(Context context, @ColorInt int backgroundColor) {
+    public void setBackgroundColor(Context context, @ColorInt int backgroundColor) {
         Drawable backgroundShape = ContextCompat.getDrawable(context, R.drawable.faboptions_background);
         backgroundShape.setColorFilter(backgroundColor, PorterDuff.Mode.ADD);
 
