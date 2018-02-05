@@ -19,12 +19,12 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.0"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 11
         versionName "1.1.2"
         vectorDrawables.useSupportLibrary = true
@@ -39,7 +39,7 @@ android {
 }
 
 dependencies {
-    final DESIGN_LIBRARY_VERSION = '25.1.1'
+    final DESIGN_LIBRARY_VERSION = '27.0.2'
 
     compile "com.android.support:design:$DESIGN_LIBRARY_VERSION"
 }
