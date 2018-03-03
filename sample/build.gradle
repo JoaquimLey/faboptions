@@ -41,6 +41,6 @@ dependencies {
     final FABOPTIONS_VERSION = '1.2.0'
 
     implementation "com.android.support:design:$DESIGN_LIBRARY_VERSION"
-//    compile "com.github.joaquimley:faboptions:$FABOPTIONS_VERSION"
+//    implementation "com.github.joaquimley:faboptions:$FABOPTIONS_VERSION"
     implementation project(':library')
 }

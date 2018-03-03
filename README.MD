@@ -125,28 +125,28 @@ Fell free to open a new issue. Follow the [ISSUE_TEMPLATE.MD](../development/ISS
 ## [Changelog](https://github.com/JoaquimLey/faboptions/releases)
 
 **1.2.0** 
-- Ability to open and close the component with new exposed `open()`/`close()` methods. - #35
-- Change the background color `setBackgroundColor()` through `@ColorInt` - #41
+- Ability to open and close the component with new exposed `open()`/`close()`
+- Change the background color `setBackgroundColor()` through `@ColorInt`
 
 **1.1.2** 
-- Fix a bug where buttons were clickable even when hidden - #25
+- Fix a bug where buttons were clickable even when hidden
 
 **1.1.1** 
-- Fix a resurfaced issue with related to Snackbar behaviour - #8 
+- Fix a resurfaced issue with related to Snackbar behaviour 
 
 **1.1.0** 
 - Backport to API 14 - #21
-- Change button color at runtime with the new #setButtonColor(int) - #22
-- Bug fix on Menu not displayed correctly - #17
-- Customize both background + fab colors. - #16
+- Change button color at runtime with the new #setButtonColor(int)
+- Bug fix on Menu not displayed correctly
+- Customize both background + fab colors
 
 **1.0.2** 
 - Fix layout measure
-- The component now reacts when a snackbar dismissed by user - #8
+- The component now reacts when a snackbar dismissed by user
  
 
 **1.0.1** 
-- Fix slight vertical offset on the button's icon - #2
+- Fix slight vertical offset on the button's icon
 
 ## Contributing
 
