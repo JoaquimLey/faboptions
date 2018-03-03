@@ -43,4 +43,4 @@ dependencies {
 
     compile "com.android.support:design:$DESIGN_LIBRARY_VERSION"
 }
-//apply from: 'https://raw.githubusercontent.com/JoaquimLey/jcenter-config/master/deploy.gradle'
+apply from: 'https://raw.githubusercontent.com/JoaquimLey/jcenter-config/master/deploy.gradle'
