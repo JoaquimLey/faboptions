@@ -5,7 +5,7 @@
 [![MaterialUp](https://img.shields.io/badge/MaterialUp-FabOptions-blue.svg?style=flat)](https://material.uplabs.com/posts/faboptions)
 [![Bintray](https://img.shields.io/badge/Bintray-v1.2.0-brightgreen.svg?style=flat)](https://bintray.com/leyopensource/FabOptions/com.github.joaquimley%3Afaboptions/1.1.2)
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-14-green.svg?style=true)
-![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-25-green.svg?style=true)
+![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-27-green.svg?style=true)
 
 **Special thanks to [André Mion](https://github.com/andremion)** for the help provided on building this component.
 Original concept by **Praveen Bisht** posted on [MaterialUp](https://www.uplabs.com/posts/options-floating-interaction), turned into code into open source library.
