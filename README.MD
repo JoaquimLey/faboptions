@@ -1,18 +1,13 @@
-![AppIcon](../master/sample/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
+![AppIcon](../develop/sample/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
 
 # FabOptions
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-FabOptions-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/4734)
 [![MaterialUp](https://img.shields.io/badge/MaterialUp-FabOptions-blue.svg?style=flat)](https://material.uplabs.com/posts/faboptions)
-[![Bintray](https://img.shields.io/badge/Bintray-v1.1.2-brightgreen.svg?style=flat)](https://bintray.com/leyopensource/FabOptions/com.github.joaquimley%3Afaboptions/1.1.2)
+[![Bintray](https://img.shields.io/badge/Bintray-v1.2.0-brightgreen.svg?style=flat)](https://bintray.com/leyopensource/FabOptions/com.github.joaquimley%3Afaboptions/1.1.2)
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-14-green.svg?style=true)
-![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-25-green.svg?style=true)
-
-### A multi-functional FAB component with customizable options.
-### Read more on the blog post: < WIP-Soon >
+![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-27-green.svg?style=true)
 
 **Special thanks to [André Mion](https://github.com/andremion)** for the help provided on building this component.
-
-
 Original concept by **Praveen Bisht** posted on [MaterialUp](https://www.uplabs.com/posts/options-floating-interaction), turned into code into open source library.
 
 
@@ -27,7 +22,7 @@ Android implementation
 - Import gradle dependency:
 
 		dependencies {
-	 	   	compile 'com.github.joaquimley:faboptions:1.1.2'
+	 	   	compile 'com.github.joaquimley:faboptions:1.2.0'
 		}
 
 - Add the component to your layout:
@@ -39,7 +34,6 @@ Android implementation
 	android:layout_height="wrap_content"
   	android:layout_gravity="bottom" />
 ```  
-
 
 - Define a `menu.xml` file with your buttons information **e.g.**
 
@@ -111,7 +105,7 @@ fabOptions.setFabColor(R.color.fabOptionsFabColor);
 fabOptions.setBackgroundColor(R.color.fabOptionsBackgroundColor);
 ```
 
-*Note: One is not depedent on the other, you can costomize individualy.*
+*Note: One is not dependent on the other, you can set individually.*
 
 **Changing button color**
 ```java
@@ -128,6 +122,32 @@ This will return a boolean value if it's able to change the color.
 **Issues:**
 Fell free to open a new issue. Follow the [ISSUE_TEMPLATE.MD](../development/ISSUE_TEMPLATE.MD)
 
+## [Changelog](https://github.com/JoaquimLey/faboptions/releases)
+
+**1.2.0** 
+- Ability to open and close the component with new exposed `open()`/`close()` methods. - #35
+- Change the background color `setBackgroundColor()` through `@ColorInt` - #41
+
+**1.1.2** 
+- Fix a bug where buttons were clickable even when hidden - #25
+
+**1.1.1** 
+- Fix a resurfaced issue with related to Snackbar behaviour - #8 
+
+**1.1.0** 
+- Backport to API 14 - #21
+- Change button color at runtime with the new #setButtonColor(int) - #22
+- Bug fix on Menu not displayed correctly - #17
+- Customize both background + fab colors. - #16
+
+**1.0.2** 
+- Fix layout measure
+- The component now reacts when a snackbar dismissed by user - #8
+ 
+
+**1.0.1** 
+- Fix slight vertical offset on the button's icon - #2
+
 ## Contributing
 
 Contributions are always welcome!
@@ -142,7 +162,6 @@ Follow the "fork-and-pull" Git workflow.
  7. Submit a **Pull request** your changes can be reviewed (please refere the issue if reported)
 
 **Prevent** code-style related changes (at least run Ctrl+⌥+O, ⌥+⌘+L) before commiting.
-
 
 ### License
 

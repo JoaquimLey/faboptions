@@ -25,8 +25,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 11
-        versionName "1.1.2"
+        versionCode 12
+        versionName "1.2.0"
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -39,8 +39,8 @@ android {
 }
 
 dependencies {
-    final DESIGN_LIBRARY_VERSION = '27.0.2'
+    final DESIGN_LIBRARY_VERSION = '27.1.0'
 
     compile "com.android.support:design:$DESIGN_LIBRARY_VERSION"
 }
-//apply from: 'https://raw.githubusercontent.com/JoaquimLey/jcenter-config/master/deploy.gradle'
+apply from: 'https://raw.githubusercontent.com/JoaquimLey/jcenter-config/master/deploy.gradle'
