@@ -16,7 +16,7 @@
 
 <resources>
 
-    <string name="faboptions_vector_overflow_path">M 6 12 L 6 12.1 M 12 12.1 L 12 12 M 18 12.1 L 18 12</string>
+    <string name="faboptions_vector_overflow_path">M 6 12 L 6 12.1, M 12 12.1 L 12 12, M 18 12.1 L 18 12</string>
 
     <string name="faboptions_vector_close_path">M 6 6 L 18 18, M 12 12 L 12 12, M 6 18 L 18 6</string>
 

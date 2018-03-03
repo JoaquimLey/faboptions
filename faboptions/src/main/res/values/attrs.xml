@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (c) Joaquim Ley 2016. All Rights Reserved.
   ~ <p/>
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,12 +18,7 @@
 <resources>
     <declare-styleable name="FabOptions">
         <attr name="button_menu" format="reference" type="menu" />
-        <attr name="direction" format="integer">
-            <flag name="split" value="0"/>
-            <flag name="up" value="1"/>
-            <flag name="down" value="2"/>
-            <flag name="left" value="3"/>
-            <flag name="right" value="4"/>
-        </attr>
+        <attr name="background_color" format="reference" type="int" />
+        <attr name="fab_color" format="reference" type="int" />
     </declare-styleable>
 </resources>

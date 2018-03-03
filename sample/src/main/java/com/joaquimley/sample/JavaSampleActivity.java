@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -41,20 +42,22 @@ public class JavaSampleActivity extends AppCompatActivity implements View.OnClic
 
     private Toolbar mToolbar;
 
-    public static Intent newStartIntent(Context context) {
-        return new Intent(context, JavaSampleActivity.class);
+    public static void start(Context context) {
+        context.startActivity(new Intent(context, JavaSampleActivity.class));
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample_java);
-        mToolbar = (Toolbar) findViewById(toolbar);
+        mToolbar = findViewById(toolbar);
         mToolbar.setTitle(getString(R.string.title_activity_java));
         setSupportActionBar(mToolbar);
 
-        FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
-        fabOptions.setButtonsMenu(this, R.menu.menu_faboptions);
+        FabOptions fabOptions = findViewById(R.id.fab_options);
+        fabOptions.setButtonsMenu(R.menu.menu_faboptions);
+        fabOptions.setBackgroundColor(this, ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        fabOptions.setFabColor(R.color.colorAccent);
         fabOptions.setOnClickListener(this);
     }
 
@@ -99,7 +102,7 @@ public class JavaSampleActivity extends AppCompatActivity implements View.OnClic
                 return true;
 
             case R.id.action_change_activity:
-                startActivity(XmlSampleActivity.newStartIntent(JavaSampleActivity.this));
+                XmlSampleActivity.start(JavaSampleActivity.this);
                 finish();
                 return true;
             default:

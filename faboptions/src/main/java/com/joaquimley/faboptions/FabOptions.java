@@ -16,30 +16,42 @@
 
 package com.joaquimley.faboptions;
 
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimatedVectorDrawable;
-import android.support.annotation.IntDef;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
+import android.os.Build;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.MenuRes;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.AppCompatImageView;
 import android.transition.ChangeBounds;
 import android.transition.ChangeTransform;
+import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.transition.TransitionSet;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import static com.joaquimley.faboptions.R.drawable.faboptions_ic_overflow;
 
 /**
  * FabOptions component
@@ -47,191 +59,401 @@ import java.lang.annotation.RetentionPolicy;
 @CoordinatorLayout.DefaultBehavior(FabOptionsBehavior.class)
 public class FabOptions extends FrameLayout implements View.OnClickListener {
 
-    private static final String TAG = "FabOptions";
-    private static final int NO_DIMENSION = 0;
-    private static final long CLOSE_MORPH_TRANSFORM_DURATION = 70;
+	private static final String TAG = "FabOptions";
 
-    public static final int DIRECTION_SPLIT = 0;
-    public static final int DIRECTION_UP = 1;
-    public static final int DIRECTION_DOWN = 2;
-    public static final int DIRECTION_LEFT = 3;
-    public static final int DIRECTION_RIGHT = 4;
+	private static final String SUPER_INSTANCE_STATE = "superInstanceState";
+	private static final String FAB_OPTIONS_IS_OPEN = "fabOptionsIsOpen";
 
-    @IntDef({DIRECTION_SPLIT, DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Direction {
-    }
+	private static final int NO_DIMENSION = 0;
+	private static final long CLOSE_MORPH_TRANSFORM_DURATION = 70;
 
-    private boolean mIsOpen;
-    private View.OnClickListener mListener;
-    private Menu mMenu; // TODO: 22/11/2016 add items in runtime
-    private int mDirection; // TODO: 09/12/2016 Change direction in runtime
-    private FloatingActionButton mFab;
+	private boolean mIsAnimating;
+	private boolean mIsOpen;
+	private View.OnClickListener mClickListener;
 
-    private View mBackground;
-    private View mSeparator;
-    private FabOptionsButtonContainer mButtonContainer;
+	private Menu mMenu;
+	private FloatingActionButton mFab;
 
-    public FabOptions(Context context) {
-        this(context, null, 0);
-    }
+	private View mBackground;
+	private View mSeparator;
+	private FabOptionsButtonContainer mButtonContainer;
 
-    public FabOptions(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
+	public FabOptions(Context context) {
+		this(context, null);
+	}
 
-    public FabOptions(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initViews(context);
-        if (attrs != null) {
-            inflateButtonsFromAttrs(context, attrs);
-        }
-        close();
-    }
+	public FabOptions(Context context, AttributeSet attrs) {
+		this(context, attrs, 0);
+	}
 
-    private void initViews(Context context) {
-        inflate(context, R.layout.faboptions_layout, this);
-        mBackground = findViewById(R.id.background);
-        mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.button_container);
-        mFab = (FloatingActionButton) findViewById(R.id.faboptions_fab);
-        mFab.setOnClickListener(this);
-    }
+	public FabOptions(Context context, AttributeSet attrs, int defStyleAttr) {
+		super(context, attrs, defStyleAttr);
+		initViews(context);
+		setInitialFabIcon();
 
-    private void inflateButtonsFromAttrs(Context context, AttributeSet attrs) {
-        TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.FabOptions, 0, 0);
-        if (attributes.hasValue(R.styleable.FabOptions_direction)) {
-            mDirection = attributes.getInt(R.styleable.FabOptions_direction, DIRECTION_SPLIT);
-        }
+		TypedArray fabOptionsAttributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.FabOptions, 0, 0);
+		styleComponent(context, fabOptionsAttributes);
+		inflateButtonsFromAttrs(context, fabOptionsAttributes);
+	}
 
-        if (attributes.hasValue(R.styleable.FabOptions_button_menu)) {
-            setButtonsMenu(context, attributes.getResourceId(R.styleable.FabOptions_button_menu, 0));
-        }
+	private void initViews(Context context) {
+		inflate(context, R.layout.faboptions_layout, this);
+		mBackground = findViewById(R.id.faboptions_background);
+		mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.faboptions_button_container);
+		mFab = (FloatingActionButton) findViewById(R.id.faboptions_fab);
+		mFab.setOnClickListener(this);
+	}
 
-        Log.e(TAG, "Direction from attributes " + mDirection);
-    }
+	public boolean isOpen() {
+		return mIsOpen;
+	}
 
-    public void setButtonsMenu(Context context, @MenuRes int menuId) {
-        mMenu = new MenuBuilder(context);
-        SupportMenuInflater menuInf = new SupportMenuInflater(context);
-        menuInf.inflate(menuId, mMenu);
-        addButtonsFromMenu(context, mMenu);
-        mSeparator = mButtonContainer.addSeparator(context, mDirection);
-    }
+	public void open(@Nullable final FabOptionsAnimationStateListener listener) {
+		expand(listener);
+	}
 
-    public void setDirection(@Direction int direction) {
-        mDirection = direction;
-    }
+	public void close(@Nullable final FabOptionsAnimationStateListener listener) {
+		collapse(listener);
+	}
 
-    private void addButtonsFromMenu(Context context, Menu menu) {
-        for (int i = 0; i < menu.size(); i++) {
-            MenuItem menuItem = menu.getItem(i);
-            addButton(context, menuItem);
-        }
-    }
+//	@Nullable
+//	@Override
+//	protected Parcelable onSaveInstanceState() {
+//		Bundle bundle = new Bundle();
+//		bundle.putParcelable(SUPER_INSTANCE_STATE, super.onSaveInstanceState());
+//		bundle.putBoolean(FAB_OPTIONS_IS_OPEN, mIsOpen);
+//		return bundle;
+//	}
+//
+//	@Override
+//	protected void onRestoreInstanceState(Parcelable state) {
+//		if (state instanceof Bundle) {
+//			Bundle bundle = (Bundle) state;
+//			mIsOpen = bundle.getBoolean(FAB_OPTIONS_IS_OPEN, false);
+//			state = bundle.getParcelable(SUPER_INSTANCE_STATE);
+//		}
+//		super.onRestoreInstanceState(state);
+//	}
 
-    private void addButton(Context context, MenuItem menuItem) {
-        AppCompatImageView button = mButtonContainer.addButton(context, menuItem.getItemId(),
-                menuItem.getTitle(), menuItem.getIcon());
-        button.setOnClickListener(this);
-    }
+	public void setFabColor(@ColorRes int fabColor) {
+		Context context = getContext();
+		if (context != null) {
+			@ColorInt int colorId = ContextCompat.getColor(context, fabColor);
+			mFab.setBackgroundTintList(ColorStateList.valueOf(colorId));
+		}
+	}
 
-    @Override
-    public void onClick(View v) {
-        int viewId = v.getId();
-        if (viewId == R.id.faboptions_fab) {
-            if (mIsOpen) {
-                close();
-            } else {
-                open();
-            }
-        } else {
-            if (mListener != null) {
-                mListener.onClick(v);
-                close();
-            }
-        }
-    }
+	public void setBackgroundColor(Context context, @ColorInt int backgroundColor) {
+		Drawable backgroundShape = ContextCompat.getDrawable(context, R.drawable.faboptions_background);
+		if (backgroundShape != null) {
+			backgroundShape.setColorFilter(backgroundColor, PorterDuff.Mode.ADD);
+		}
 
-    public void setOnClickListener(View.OnClickListener listener) {
-        mListener = listener;
-    }
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+			mBackground.setBackground(backgroundShape);
+		} else {
+			mBackground.setBackgroundDrawable(backgroundShape);
+		}
+	}
 
-    private void open() {
-        AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_menu_animatable, null);
-        mFab.setImageDrawable(drawable);
-        drawable.start();
-        TransitionManager.beginDelayedTransition(this, new OpenMorphTransition(mButtonContainer));
-        animateButtons(true);
-        animateBackground(true);
-        mIsOpen = true;
-    }
+	/**
+	 * @deprecated Prefer passing resolved color {@link #setBackgroundColor(Context, int)} for safe context
+	 */
+	@Deprecated
+	public void setBackgroundColor(@ColorRes int backgroundColor) {
+		Context context = getContext();
+		if (context != null) {
+			setBackgroundColor(context, ContextCompat.getColor(context, backgroundColor));
+		} else {
+			Log.w(TAG, "Couldn't set background color, context is null");
+		}
+	}
 
-    private void close() {
-        AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_close_animatable, null);
-        mFab.setImageDrawable(drawable);
-        drawable.start();
-        TransitionManager.beginDelayedTransition(this, new CloseMorphTransition(mButtonContainer));
-        animateButtons(false);
-        animateBackground(false);
-        mIsOpen = false;
-    }
+	public boolean setButtonColor(int buttonId, @ColorRes int color) {
+		for (int i = 0; i < mButtonContainer.getChildCount(); i++) {
+			if (mMenu.getItem(i).getItemId() == buttonId) {
+				return styleButton(i, color);
+			}
+		}
+		Log.d(TAG, "setButtonColor(): Couldn't find button with id " + buttonId);
+		return false;
+	}
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if (mSeparator != null) {
-            ViewGroup.LayoutParams separatorLayoutParams = mSeparator.getLayoutParams();
-            separatorLayoutParams.width = mFab.getMeasuredWidth();
-            separatorLayoutParams.height = mFab.getMeasuredHeight();
-            mSeparator.setLayoutParams(separatorLayoutParams);
-        }
-    }
+	public void setButtonsMenu(@MenuRes int menuId) {
+		Context context = getContext();
+		if (context != null) {
+			setButtonsMenu(context, menuId);
+		} else {
+			Log.w(TAG, "Couldn't set buttons, context is null");
+		}
+	}
 
-    private void animateBackground(final boolean isOpen) {
-        ViewGroup.LayoutParams backgroundLayoutParams = mBackground.getLayoutParams();
-        backgroundLayoutParams.width = isOpen ? mButtonContainer.getMeasuredWidth() : NO_DIMENSION;
-        mBackground.setLayoutParams(backgroundLayoutParams);
-    }
+	/**
+	 * Deprecated use {@link #setButtonsMenu(int)}.
+	 */
+	@Deprecated
+	@SuppressLint("RestrictedApi")
+	public void setButtonsMenu(Context context, @MenuRes int menuId) {
+		mMenu = new MenuBuilder(context);
+		SupportMenuInflater menuInf = new SupportMenuInflater(context);
+		menuInf.inflate(menuId, mMenu);
+		addButtonsFromMenu(context, mMenu);
+		mSeparator = mButtonContainer.addSeparator(context);
+		animateButtons(false);
+	}
 
-    private void animateButtons(boolean isOpen) {
-        for (int i = 0; i < mButtonContainer.getChildCount(); i++) {
-            mButtonContainer.getChildAt(i).setScaleX(isOpen ? 1 : 0);
-            mButtonContainer.getChildAt(i).setScaleY(isOpen ? 1 : 0);
-        }
-    }
+	private void setInitialFabIcon() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			VectorDrawable drawable = (VectorDrawable) getResources().getDrawable(faboptions_ic_overflow, null);
+			mFab.setImageDrawable(drawable);
+		} else {
+			mFab.setImageResource(R.drawable.faboptions_ic_overflow);
+		}
+	}
 
-    public boolean isOpen() {
-        return mIsOpen;
-    }
+	/**
+	 * Styles the component via attributes R.styleable.FabOptions_fab_color
+	 * If not set, the background same colour as the FAB, which in turn if  the later
+	 * is not not set the default accent color will be used
+	 */
+	private void styleComponent(Context context, TypedArray attributes) {
+		int fabColor = attributes.getColor(R.styleable.FabOptions_fab_color, getThemeAccentColor(context));
+		int backgroundColor = attributes.getColor(R.styleable.FabOptions_background_color, fabColor);
 
-    private static class OpenMorphTransition extends TransitionSet {
-        OpenMorphTransition(ViewGroup viewGroup) {
-            ChangeBounds changeBound = new ChangeBounds();
-            changeBound.excludeChildren(R.id.button_container, true);
+		setBackgroundColor(context, backgroundColor);
+		mFab.setBackgroundTintList(ColorStateList.valueOf(fabColor));
+	}
 
-            ChangeTransform changeTransform = new ChangeTransform();
-            for (int i = 0; i < viewGroup.getChildCount(); i++) {
-                changeTransform.addTarget(viewGroup.getChildAt(i));
-            }
-            addTransition(changeBound);
-            addTransition(changeTransform);
-            setOrdering(TransitionSet.ORDERING_SEQUENTIAL);
-        }
-    }
+	@ColorInt
+	private int getThemeAccentColor(final Context context) {
+		final TypedValue value = new TypedValue();
+		context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
+		return value.data;
+	}
 
-    private static class CloseMorphTransition extends TransitionSet {
-        CloseMorphTransition(ViewGroup viewGroup) {
-            ChangeBounds changeBound = new ChangeBounds();
-            changeBound.excludeChildren(R.id.button_container, true);
+	private void inflateButtonsFromAttrs(Context context, TypedArray attributes) {
+		if (attributes.hasValue(R.styleable.FabOptions_button_menu)) {
+			setButtonsMenu(context, attributes.getResourceId(R.styleable.FabOptions_button_menu, 0));
+		}
+	}
 
-            ChangeTransform changeTransform = new ChangeTransform();
-            for (int i = 0; i < viewGroup.getChildCount(); i++) {
-                changeTransform.addTarget(viewGroup.getChildAt(i));
-            }
-            changeTransform.setDuration(CLOSE_MORPH_TRANSFORM_DURATION);
-            addTransition(changeTransform);
-            addTransition(changeBound);
-            setOrdering(TransitionSet.ORDERING_TOGETHER);
-        }
-    }
+	private void addButtonsFromMenu(Context context, Menu menu) {
+		for (int i = 0; i < menu.size(); i++) {
+			addButton(context, menu.getItem(i));
+		}
+	}
+
+	private void addButton(Context context, MenuItem menuItem) {
+		AppCompatImageView button = mButtonContainer.addButton(context, menuItem.getItemId(),
+				menuItem.getTitle(), menuItem.getIcon());
+		button.setOnClickListener(this);
+	}
+
+	private boolean styleButton(int buttonIndex, @ColorRes int color) {
+		if (buttonIndex >= (mButtonContainer.getChildCount() / 2)) {
+			// Hacky way to deal with the separator view index
+			buttonIndex++;
+		}
+
+		if (buttonIndex >= mButtonContainer.getChildCount()) {
+			Log.e(TAG, "Button at " + buttonIndex + " is null (index out of bounds)");
+			return false;
+		}
+
+		AppCompatImageView imageView = (AppCompatImageView) mButtonContainer.getChildAt(buttonIndex);
+		imageView.setColorFilter(ContextCompat.getColor(getContext(), color));
+		return true;
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (!mIsAnimating) {
+			mIsAnimating = true;
+			if (v.getId() == R.id.faboptions_fab) {
+				if (mIsOpen) {
+					collapse(null);
+				} else {
+					expand(null);
+				}
+			} else {
+				if (mClickListener != null && mIsOpen) {
+					mClickListener.onClick(v);
+					collapse(null);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void setOnClickListener(View.OnClickListener listener) {
+		mClickListener = listener;
+	}
+
+	private void expand(@Nullable final FabOptionsAnimationStateListener listener) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources()
+					.getDrawable(R.drawable.faboptions_ic_menu_animatable, null);
+			mFab.setImageDrawable(drawable);
+			drawable.start();
+		} else {
+			mFab.setImageResource(R.drawable.faboptions_ic_close);
+		}
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			final TransitionSet transitionSet = new OpenMorphTransition(mButtonContainer);
+			transitionSet.addListener(new Transition.TransitionListener() {
+				@Override
+				public void onTransitionStart(final Transition transition) {
+				}
+
+				@Override
+				public void onTransitionEnd(final Transition transition) {
+					if (listener != null) {
+						listener.onOpenAnimationEnd();
+					}
+					mIsAnimating = false;
+				}
+
+				@Override
+				public void onTransitionCancel(final Transition transition) {
+				}
+
+				@Override
+				public void onTransitionPause(final Transition transition) {
+				}
+
+				@Override
+				public void onTransitionResume(final Transition transition) {
+				}
+			});
+
+			TransitionManager.beginDelayedTransition(this, transitionSet);
+		}
+		animateBackground(true);
+		animateButtons(true);
+
+		mIsOpen = true;
+	}
+
+	private void collapse(@Nullable final FabOptionsAnimationStateListener listener) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.faboptions_ic_close_animatable, null);
+			mFab.setImageDrawable(drawable);
+			drawable.start();
+		} else {
+			mFab.setImageResource(R.drawable.faboptions_ic_overflow);
+		}
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			final TransitionSet transitionSet = new CloseMorphTransition(mButtonContainer);
+			transitionSet.addListener(new Transition.TransitionListener() {
+				@Override
+				public void onTransitionStart(final Transition transition) {
+				}
+
+				@Override
+				public void onTransitionEnd(final Transition transition) {
+					if (listener != null) {
+						listener.onCloseAnimationEnd();
+					}
+					mIsAnimating = false;
+				}
+
+				@Override
+				public void onTransitionCancel(final Transition transition) {
+				}
+
+				@Override
+				public void onTransitionPause(final Transition transition) {
+				}
+
+				@Override
+				public void onTransitionResume(final Transition transition) {
+				}
+			});
+
+			TransitionManager.beginDelayedTransition(this, transitionSet);
+		}
+		animateButtons(false);
+		animateBackground(false);
+		mIsOpen = false;
+	}
+
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+		if (mSeparator != null) {
+			ViewGroup.LayoutParams separatorLayoutParams = mSeparator.getLayoutParams();
+			separatorLayoutParams.width = mFab.getMeasuredWidth();
+			separatorLayoutParams.height = mFab.getMeasuredHeight();
+			mSeparator.setLayoutParams(separatorLayoutParams);
+		}
+	}
+
+	private void animateBackground(final boolean isOpen) {
+		ViewGroup.LayoutParams backgroundLayoutParams = mBackground.getLayoutParams();
+		backgroundLayoutParams.width = isOpen ? mButtonContainer.getMeasuredWidth() : NO_DIMENSION;
+		mBackground.setLayoutParams(backgroundLayoutParams);
+	}
+
+	private void openCompatAnimation() {
+		ObjectAnimator anim = ObjectAnimator.ofFloat(mBackground, "scaleX", 1.0f);
+		anim.setDuration(30000); // duration 3 seconds
+		anim.start();
+	}
+
+
+	private void closeCompatAnimation() {
+		ObjectAnimator anim = ObjectAnimator.ofFloat(mBackground, "scaleX", 0.0f);
+		anim.setDuration(3000);
+		anim.start();
+		animateButtons(false);
+	}
+
+	private void animateButtons(boolean isOpen) {
+		for (int i = 0; i < mButtonContainer.getChildCount(); i++) {
+			mButtonContainer.getChildAt(i).setScaleX(isOpen ? 1 : 0);
+			mButtonContainer.getChildAt(i).setScaleY(isOpen ? 1 : 0);
+		}
+	}
+
+	@RequiresApi(api = Build.VERSION_CODES.KITKAT)
+	private class OpenMorphTransition extends TransitionSet {
+		OpenMorphTransition(ViewGroup viewGroup) {
+
+			ChangeBounds changeBound = new ChangeBounds();
+			changeBound.excludeChildren(R.id.faboptions_button_container, true);
+			addTransition(changeBound);
+
+			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+				ChangeTransform changeTransform = new ChangeTransform();
+				for (int i = 0; i < viewGroup.getChildCount(); i++) {
+					changeTransform.addTarget(viewGroup.getChildAt(i));
+				}
+				addTransition(changeTransform);
+			}
+
+			setOrdering(TransitionSet.ORDERING_SEQUENTIAL);
+		}
+	}
+
+	@RequiresApi(api = Build.VERSION_CODES.KITKAT)
+	private class CloseMorphTransition extends TransitionSet {
+		CloseMorphTransition(ViewGroup viewGroup) {
+
+			ChangeBounds changeBound = new ChangeBounds();
+			changeBound.excludeChildren(R.id.faboptions_button_container, true);
+
+			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+				ChangeTransform changeTransform = new ChangeTransform();
+				for (int i = 0; i < viewGroup.getChildCount(); i++) {
+					changeTransform.addTarget(viewGroup.getChildAt(i));
+				}
+				changeTransform.setDuration(CLOSE_MORPH_TRANSFORM_DURATION);
+				addTransition(changeTransform);
+			}
+
+			addTransition(changeBound);
+			setOrdering(TransitionSet.ORDERING_TOGETHER);
+		}
+	}
 }

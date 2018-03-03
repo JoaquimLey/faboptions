@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) Joaquim Ley 2016. All Rights Reserved.
   ~ <p/>
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,18 +15,18 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="@dimen/faboptions_layout_height">
+             android:layout_width="wrap_content"
+             android:layout_height="@dimen/faboptions_layout_height"
+             android:background="@null">
 
     <View
-        android:id="@+id/background"
+        android:id="@+id/faboptions_background"
         android:layout_width="0dp"
         android:layout_height="@dimen/faboptions_button_layout_height"
-        android:layout_gravity="center"
-        android:background="@drawable/faboptions_background" />
+        android:layout_gravity="center"/>
 
     <com.joaquimley.faboptions.FabOptionsButtonContainer
-        android:id="@+id/button_container"
+        android:id="@+id/faboptions_button_container"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/faboptions_button_layout_height"
         android:layout_gravity="center"
@@ -35,12 +34,12 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingEnd="@dimen/faboptions_button_padding"
-        android:paddingStart="@dimen/faboptions_button_padding" />
+        android:paddingStart="@dimen/faboptions_button_padding"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/faboptions_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"/>
 
 </FrameLayout>
