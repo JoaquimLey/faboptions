@@ -40,80 +40,80 @@ import static com.joaquimley.faboptions.sample.R.id.toolbar;
 
 public class XmlSampleActivity extends AppCompatActivity implements View.OnClickListener {
 
-    static {
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-    }
+	static {
+		AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+	}
 
-    private Toolbar mToolbar;
-    private FabOptions mFabOptions;
+	private Toolbar mToolbar;
+	private FabOptions mFabOptions;
 
-    public static void start(Context context) {
-        context.startActivity(new Intent(context, XmlSampleActivity.class));
-    }
+	public static void start(Context context) {
+		context.startActivity(new Intent(context, XmlSampleActivity.class));
+	}
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sample_xml);
-        mToolbar = findViewById(toolbar);
-        mToolbar.setTitle(getString(R.string.title_activity_xml));
-        setSupportActionBar(mToolbar);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_sample_xml);
+		mToolbar = findViewById(toolbar);
+		mToolbar.setTitle(getString(R.string.title_activity_xml));
+		setSupportActionBar(mToolbar);
 
-        mFabOptions = findViewById(R.id.fab_options);
-        mFabOptions.setOnClickListener(this);
-    }
+		mFabOptions = findViewById(R.id.fab_options);
+		mFabOptions.setOnClickListener(this);
+	}
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.faboptions_favorite:
-                mFabOptions.setButtonColor(R.id.faboptions_favorite, R.color.colorAccent);
-                Toast.makeText(XmlSampleActivity.this, "Favorite", Toast.LENGTH_SHORT).show();
-                break;
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+			case R.id.faboptions_favorite:
+				mFabOptions.setButtonColor(R.id.faboptions_favorite, R.color.colorAccent);
+				Toast.makeText(XmlSampleActivity.this, "Favorite", Toast.LENGTH_SHORT).show();
+				break;
 
-            case R.id.faboptions_textsms:
-                mFabOptions.setButtonColor(R.id.faboptions_textsms, R.color.colorAccent);
-                Toast.makeText(XmlSampleActivity.this, "Message", Toast.LENGTH_SHORT).show();
-                break;
-
-
-            case R.id.faboptions_download:
-                mFabOptions.setButtonColor(R.id.faboptions_download, R.color.colorAccent);
-                Toast.makeText(XmlSampleActivity.this, "Download", Toast.LENGTH_SHORT).show();
-                break;
+			case R.id.faboptions_textsms:
+				mFabOptions.setButtonColor(R.id.faboptions_textsms, R.color.colorAccent);
+				Toast.makeText(XmlSampleActivity.this, "Message", Toast.LENGTH_SHORT).show();
+				break;
 
 
-            case R.id.faboptions_share:
-                mFabOptions.setButtonColor(R.id.faboptions_share, R.color.colorAccent);
-                Toast.makeText(XmlSampleActivity.this, "Share", Toast.LENGTH_SHORT).show();
-                break;
+			case R.id.faboptions_download:
+				mFabOptions.setButtonColor(R.id.faboptions_download, R.color.colorAccent);
+				Toast.makeText(XmlSampleActivity.this, "Download", Toast.LENGTH_SHORT).show();
+				break;
 
-            default:
-                // no-op
-        }
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_activity_main, menu);
-        return true;
-    }
+			case R.id.faboptions_share:
+				mFabOptions.setButtonColor(R.id.faboptions_share, R.color.colorAccent);
+				Toast.makeText(XmlSampleActivity.this, "Share", Toast.LENGTH_SHORT).show();
+				break;
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_snackbar_test:
-                Snackbar.make(mToolbar, getString(R.string.action_snackbar_test_message),
-                        Snackbar.LENGTH_LONG).show();
-                return true;
+			default:
+				// no-op
+		}
+	}
 
-            case R.id.action_change_activity:
-                JavaSampleActivity.start(XmlSampleActivity.this);
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_activity_main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_snackbar_test:
+				Snackbar.make(mToolbar, getString(R.string.action_snackbar_test_message),
+						Snackbar.LENGTH_LONG).show();
+				return true;
+
+			case R.id.action_change_activity:
+				JavaSampleActivity.start(XmlSampleActivity.this);
+				finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 }

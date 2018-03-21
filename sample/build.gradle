@@ -42,6 +42,5 @@ dependencies {
 
     implementation "com.android.support:design:$DESIGN_LIBRARY_VERSION"
 //    implementation "com.github.joaquimley:faboptions:$FABOPTIONS_VERSION"
-//    implementation project(':faboptions')
-    compile 'com.github.joaquimley:faboptions:1.2.0'
+    implementation project(':library')
 }

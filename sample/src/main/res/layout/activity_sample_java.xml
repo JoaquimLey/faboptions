@@ -16,12 +16,12 @@
   -->
 
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.joaquimley.sample.XmlSampleActivity">
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:fitsSystemWindows="true"
+                                                 tools:context="com.joaquimley.sample.XmlSampleActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
     </android.support.design.widget.AppBarLayout>
 
     <TextView
@@ -42,12 +42,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/website" />
+        android:autoLink="web"
+        android:text="@string/website"/>
 
     <com.joaquimley.faboptions.FabOptions
         android:id="@+id/fab_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_gravity="center_horizontal|bottom"/>
 
 </android.support.design.widget.CoordinatorLayout>
