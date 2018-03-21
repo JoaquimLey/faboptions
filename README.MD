@@ -1,4 +1,4 @@
-![AppIcon](../develop/sample/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
+![AppIcon](../development/sample/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
 
 # FabOptions
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-FabOptions-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/4734)
