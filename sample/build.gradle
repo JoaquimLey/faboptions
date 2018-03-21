@@ -37,10 +37,11 @@ android {
 }
 
 dependencies {
-    final DESIGN_LIBRARY_VERSION = '27.0.0'
-    final FABOPTIONS_VERSION = '1.2.0'
+    def DESIGN_LIBRARY_VERSION = '27.1.0'
+    def FABOPTIONS_VERSION = '1.2.0'
 
     implementation "com.android.support:design:$DESIGN_LIBRARY_VERSION"
 //    implementation "com.github.joaquimley:faboptions:$FABOPTIONS_VERSION"
-    implementation project(':faboptions')
+//    implementation project(':faboptions')
+    compile 'com.github.joaquimley:faboptions:1.2.0'
 }

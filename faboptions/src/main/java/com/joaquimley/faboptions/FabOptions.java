@@ -99,8 +99,8 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 	private void initViews(Context context) {
 		inflate(context, R.layout.faboptions_layout, this);
 		mBackground = findViewById(R.id.faboptions_background);
-		mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.faboptions_button_container);
-		mFab = (FloatingActionButton) findViewById(R.id.faboptions_fab);
+		mButtonContainer = findViewById(R.id.faboptions_button_container);
+		mFab = findViewById(R.id.faboptions_fab);
 		mFab.setOnClickListener(this);
 	}
 

@@ -21,6 +21,6 @@
     <string name="website">joaquimley.com</string>
 
     <string name="change_activity">Change Activity</string>
-    <string name="action_snackbar_test_message">FabOptions should react to me</string>
+    <string name="action_snackbar_test_message">FabOptions reacts to me</string>
     <string name="action_snackbar_test">Snackbar test</string>
 </resources>

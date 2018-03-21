@@ -20,5 +20,5 @@
     android:layout_height="@dimen/faboptions_icon_size"
     android:layout_margin="@dimen/faboptions_button_padding"
     android:layout_gravity="center"
-    android:clickable="true"
+    android:focusable="true"
     android:foreground="?attr/selectableItemBackgroundBorderless" />
