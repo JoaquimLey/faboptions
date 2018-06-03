@@ -14,13 +14,11 @@
   ~ limitations under the License.
   -->
 
-<resources>
-    <string name="app_name">FabOptions sample</string>
-    <string name="title_activity_xml">FabOptions: XML</string>
-    <string name="title_activity_java">FabOptions: Java</string>
-    <string name="website">joaquimley.com</string>
-
-    <string name="change_activity">Change Activity</string>
-    <string name="action_snackbar_test_message">FabOptions reacts to me</string>
-    <string name="action_snackbar_test">Snackbar test</string>
-</resources>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:drawable="@drawable/faboptions_ic_close"
+    tools:targetApi="lollipop">
+    <target
+        android:name="main"
+        android:animation="@animator/faboptions_close_to_overflow" />
+</animated-vector>

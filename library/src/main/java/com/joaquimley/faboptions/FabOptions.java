@@ -96,14 +96,6 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 		inflateButtonsFromAttrs(context, fabOptionsAttributes);
 	}
 
-	private void initViews(Context context) {
-		inflate(context, R.layout.faboptions_layout, this);
-		mBackground = findViewById(R.id.faboptions_background);
-		mButtonContainer = findViewById(R.id.faboptions_button_container);
-		mFab = findViewById(R.id.faboptions_fab);
-		mFab.setOnClickListener(this);
-	}
-
 	public boolean isOpen() {
 		return mIsOpen;
 	}
@@ -200,6 +192,14 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 		addButtonsFromMenu(context, mMenu);
 		mSeparator = mButtonContainer.addSeparator(context);
 		animateButtons(false);
+	}
+
+	private void initViews(Context context) {
+		inflate(context, R.layout.faboptions_layout, this);
+		mBackground = findViewById(R.id.faboptions_background);
+		mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.faboptions_button_container);
+		mFab = (FloatingActionButton) findViewById(R.id.faboptions_fab);
+		mFab.setOnClickListener(this);
 	}
 
 	private void setInitialFabIcon() {

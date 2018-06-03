@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) Joaquim Ley 2016. All Rights Reserved.
+  ~ Copyright (c) Joaquim Ley 2017. All Rights Reserved.
   ~ <p/>
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,11 +14,18 @@
   ~ limitations under the License.
   -->
 
-<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:drawable="@drawable/faboptions_ic_close"
-    tools:targetApi="lollipop">
-    <target
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/faboptions_vector_dimensions"
+    android:height="@dimen/faboptions_vector_dimensions"
+    android:viewportHeight="24.0"
+    android:viewportWidth="24.0">
+
+    <path
         android:name="main"
-        android:animation="@animator/close_to_overflow" />
-</animated-vector>
+        android:fillColor="#FFF"
+        android:pathData="@string/faboptions_vector_overflow_path"
+        android:strokeColor="#FFF"
+        android:strokeLineCap="round"
+        android:strokeWidth="4.1" />
+
+</vector>

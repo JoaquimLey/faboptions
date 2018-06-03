@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -39,73 +40,77 @@ import static com.joaquimley.faboptions.sample.R.id.toolbar;
 
 public class JavaSampleActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Toolbar mToolbar;
+	private Toolbar mToolbar;
 
-    public static Intent newStartIntent(Context context) {
-        return new Intent(context, JavaSampleActivity.class);
-    }
+	public static void start(Context context) {
+		context.startActivity(new Intent(context, JavaSampleActivity.class));
+	}
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sample_java);
-        mToolbar = (Toolbar) findViewById(toolbar);
-        mToolbar.setTitle(getString(R.string.title_activity_java));
-        setSupportActionBar(mToolbar);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_sample_java);
+		mToolbar = findViewById(toolbar);
+		mToolbar.setTitle(getString(R.string.title_activity_java));
+		setSupportActionBar(mToolbar);
+		// This is the important part
+		customizingFabOptions();
+	}
 
-        FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
-        fabOptions.setButtonsMenu(R.menu.menu_faboptions);
-        fabOptions.setBackgroundColor(R.color.colorPrimaryDark);
-        fabOptions.setFabColor(R.color.colorAccent);
-        fabOptions.setOnClickListener(this);
-    }
+	private void customizingFabOptions() {
+		FabOptions fabOptions = findViewById(R.id.fab_options);
+		fabOptions.setButtonsMenu(R.menu.menu_faboptions);
+		fabOptions.setBackgroundColor(this, ContextCompat.getColor(this, R.color.colorPrimaryDark));
+		fabOptions.setFabColor(R.color.colorAccent);
+		fabOptions.setOnClickListener(this);
+	}
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.faboptions_favorite:
-                Toast.makeText(JavaSampleActivity.this, "Favorite", Toast.LENGTH_SHORT).show();
-                break;
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+			case R.id.faboptions_favorite:
+				Toast.makeText(JavaSampleActivity.this, "Favorite", Toast.LENGTH_SHORT).show();
+				break;
 
-            case R.id.faboptions_textsms:
-                Toast.makeText(JavaSampleActivity.this, "Message", Toast.LENGTH_SHORT).show();
-                break;
+			case R.id.faboptions_textsms:
+				Toast.makeText(JavaSampleActivity.this, "Message", Toast.LENGTH_SHORT).show();
+				break;
 
 
-            case R.id.faboptions_download:
-                Toast.makeText(JavaSampleActivity.this, "Download", Toast.LENGTH_SHORT).show();
-                break;
+			case R.id.faboptions_download:
+				Toast.makeText(JavaSampleActivity.this, "Download", Toast.LENGTH_SHORT).show();
+				break;
 
-            case R.id.faboptions_share:
-                Toast.makeText(JavaSampleActivity.this, "Share", Toast.LENGTH_SHORT).show();
-                break;
+			case R.id.faboptions_share:
+				Toast.makeText(JavaSampleActivity.this, "Share", Toast.LENGTH_SHORT).show();
+				break;
 
-            default:
-                // no-op
-        }
-    }
+			default:
+				// no-op
+		}
+	}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_activity_main, menu);
-        return true;
-    }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_activity_main, menu);
+		return true;
+	}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_snackbar_test:
-                Snackbar.make(mToolbar, getString(R.string.action_snackbar_test_message),
-                        Snackbar.LENGTH_LONG).show();
-                return true;
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_snackbar_test:
+				Snackbar.make(mToolbar, getString(R.string.action_snackbar_test_message),
+						Snackbar.LENGTH_LONG).show();
+				return true;
 
-            case R.id.action_change_activity:
-                startActivity(XmlSampleActivity.newStartIntent(JavaSampleActivity.this));
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+			case R.id.action_change_activity:
+				XmlSampleActivity.start(JavaSampleActivity.this);
+				finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 }

@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) Joaquim Ley 2016. All Rights Reserved.
   ~ <p/>
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,11 +14,13 @@
   ~ limitations under the License.
   -->
 
-<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:drawable="@drawable/faboptions_ic_overflow"
-    tools:targetApi="lollipop">
-    <target
-        android:name="main"
-        android:animation="@animator/overflow_to_close" />
-</animated-vector>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="sequentially">
+
+    <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+        android:propertyName="pathData"
+        android:valueFrom="@string/faboptions_vector_overflow_path"
+        android:valueTo="@string/faboptions_vector_close_path"
+        android:valueType="pathType" />
+
+</set>
