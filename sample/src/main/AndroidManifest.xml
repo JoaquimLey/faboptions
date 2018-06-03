@@ -26,11 +26,9 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.joaquimley.sample.XmlSampleActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name="com.joaquimley.sample.XmlSampleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

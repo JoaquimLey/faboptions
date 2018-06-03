@@ -40,7 +40,6 @@ android {
 
 dependencies {
     final DESIGN_LIBRARY_VERSION = '27.1.0'
-
-    compile "com.android.support:design:$DESIGN_LIBRARY_VERSION"
+    implementation "com.android.support:design:$DESIGN_LIBRARY_VERSION"
 }
 apply from: 'https://raw.githubusercontent.com/JoaquimLey/jcenter-config/master/deploy.gradle'

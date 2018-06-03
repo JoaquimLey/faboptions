@@ -1,11 +1,23 @@
 ![AppIcon](../development/sample/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
 
+<<<<<<< HEAD
+#FabOptions
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-FabOptions-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/4734)
+[![MaterialUp](https://img.shields.io/badge/MaterialUp-FabOptions-blue.svg?style=flat)](https://material.uplabs.com/posts/faboptions)
+[![Bintray](https://img.shields.io/badge/Bintray-v1.0.1-brightgreen.svg?style=flat)](https://bintray.com/joaquimleyapps/opensource/com.github.joaquimley%3Afaboptions/1.0.1)
+![minSdkVersion](https://img.shields.io/badge/minSdkVersion-21-red.svg?style=true)
+![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-25-green.svg?style=true)
+
+###A multi-functional FAB component with customizable options.
+###Read more on the blog post: < WIP-Soon >
+=======
 # FabOptions
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-FabOptions-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/4734)
 [![MaterialUp](https://img.shields.io/badge/MaterialUp-FabOptions-blue.svg?style=flat)](https://material.uplabs.com/posts/faboptions)
 [![Bintray](https://img.shields.io/badge/Bintray-v1.2.0-brightgreen.svg?style=flat)](https://bintray.com/leyopensource/FabOptions/com.github.joaquimley%3Afaboptions/1.1.2)
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-14-green.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-27-green.svg?style=true)
+>>>>>>> development
 
 **Special thanks to [André Mion](https://github.com/andremion)** for the help provided on building this component.
 Original concept by **Praveen Bisht** posted on [MaterialUp](https://www.uplabs.com/posts/options-floating-interaction), turned into code into open source library.
@@ -22,9 +34,15 @@ Android implementation
 - Import gradle dependency:
 
 		dependencies {
+<<<<<<< HEAD
+	 	   	compile 'com.github.joaquimley:faboptions:1.0.1'
+		}
+		
+=======
 	 	   	compile 'com.github.joaquimley:faboptions:1.2.0'
 		}
 
+>>>>>>> development
 - Add the component to your layout:
 
 ```xml
@@ -33,8 +51,14 @@ Android implementation
  	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
   	android:layout_gravity="bottom" />
+<<<<<<< HEAD
+``` 
+
+###Buttons
+=======
 ```  
 
+>>>>>>> development
 - Define a `menu.xml` file with your buttons information **e.g.**
 
 ```xml
@@ -60,19 +84,32 @@ Android implementation
         android:icon="@drawable/ic_share"
         android:title="Share" />
 </menu>
+<<<<<<< HEAD
+```	 	
+Bind the buttons to your component
+
+**XML:**
+
+- Bind the buttons menu by adding the  **custom attribute** `app:button_menu="@menu/your_fab_buttons"` to your component XML
+=======
 ```		       
 
 **XML**:
 
 - Bind the buttons menu by adding the  **custom attribute** `app:button_menu="@menu/your_fab_buttons"` to your component XML.
+>>>>>>> development
 
-**Programmatically**
+**Programmatically:**
 
 - Bind the buttons menu on your FabOptions instance with FabOptions#setMenu(Menu).
 
 ```java
 FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
+<<<<<<< HEAD
+fabOptions.setButtonsMenu(this, R.menu.your_fab_buttons);
+=======
 fabOptions.setButtonsMenu(R.menu.your_fab_buttons);
+>>>>>>> development
 ```
        
        
@@ -80,9 +117,18 @@ fabOptions.setButtonsMenu(R.menu.your_fab_buttons);
 **Listening for click events**
 
 - Set your FabOptions instance click listener.
+<<<<<<< HEAD
+
+- Handle the click events for each button id defined on the `menu.xml`.
+=======
+>>>>>>> development
 
 - Handle the click events for each button id defined on the `menu.xml`.
 
+<<<<<<< HEAD
+###Sample available on the Playstore
+=======
+>>>>>>> development
 
 ## Customizing
 
@@ -125,28 +171,28 @@ Fell free to open a new issue. Follow the [ISSUE_TEMPLATE.MD](../development/ISS
 ## [Changelog](https://github.com/JoaquimLey/faboptions/releases)
 
 **1.2.0** 
-- Ability to open and close the component with new exposed `open()`/`close()` methods. - #35
-- Change the background color `setBackgroundColor()` through `@ColorInt` - #41
+- Ability to open and close the component with new exposed `open()`/`close()`
+- Change the background color `setBackgroundColor()` through `@ColorInt`
 
 **1.1.2** 
-- Fix a bug where buttons were clickable even when hidden - #25
+- Fix a bug where buttons were clickable even when hidden
 
 **1.1.1** 
-- Fix a resurfaced issue with related to Snackbar behaviour - #8 
+- Fix a resurfaced issue with related to Snackbar behaviour 
 
 **1.1.0** 
 - Backport to API 14 - #21
-- Change button color at runtime with the new #setButtonColor(int) - #22
-- Bug fix on Menu not displayed correctly - #17
-- Customize both background + fab colors. - #16
+- Change button color at runtime with the new #setButtonColor(int)
+- Bug fix on Menu not displayed correctly
+- Customize both background + fab colors
 
 **1.0.2** 
 - Fix layout measure
-- The component now reacts when a snackbar dismissed by user - #8
+- The component now reacts when a snackbar dismissed by user
  
 
 **1.0.1** 
-- Fix slight vertical offset on the button's icon - #2
+- Fix slight vertical offset on the button's icon
 
 ## Contributing
 
