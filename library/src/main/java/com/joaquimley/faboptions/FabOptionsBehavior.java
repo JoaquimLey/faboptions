@@ -36,7 +36,6 @@ public class FabOptionsBehavior extends CoordinatorLayout.Behavior<FrameLayout> 
     public boolean onDependentViewChanged(CoordinatorLayout parent, FrameLayout child, View dependency) {
         float translationY = Math.min(0, dependency.getTranslationY() - dependency.getHeight());
         child.setTranslationY(translationY);
-        // TODO: 21/11/2016 Handle instanceof BottomSheetNav & others
         return true;
     }
 

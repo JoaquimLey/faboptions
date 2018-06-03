@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) Joaquim Ley 2016. All Rights Reserved.
+  ~ Copyright (c) Joaquim Ley 2017. All Rights Reserved.
   ~ <p/>
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,13 +14,17 @@
   ~ limitations under the License.
   -->
 
-<resources>
-    <string name="app_name">FabOptions sample</string>
-    <string name="title_activity_xml">FabOptions: XML</string>
-    <string name="title_activity_java">FabOptions: Java</string>
-    <string name="website">joaquimley.com</string>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/faboptions_vector_dimensions"
+    android:height="@dimen/faboptions_vector_dimensions"
+    android:viewportHeight="24.0"
+    android:viewportWidth="24.0">
 
-    <string name="change_activity">Change Activity</string>
-    <string name="action_snackbar_test_message">FabOptions reacts to me</string>
-    <string name="action_snackbar_test">Snackbar test</string>
-</resources>
+    <path
+        android:name="main"
+        android:pathData="@string/faboptions_vector_close_path"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeWidth="4.1" />
+
+</vector>

@@ -20,5 +20,5 @@
     tools:targetApi="lollipop">
     <target
         android:name="main"
-        android:animation="@animator/close_to_overflow" />
+        android:animation="@animator/faboptions_close_to_overflow" />
 </animated-vector>
